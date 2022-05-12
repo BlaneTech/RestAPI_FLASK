@@ -1,9 +1,10 @@
+from crypt import methods
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from database import *
 
 api=Flask(__name__)
-api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://groupe4:test123@localhost/dbcreateapi'
+api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://groupe4:test123@localhost/projetflask'
 api.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 URL='/groupe4/api/'
@@ -183,6 +184,38 @@ def get_all_photos_album(albumid):
         }
         all_photos_album.append(photos_album_results)
     return jsonify(all_photos_album)
+
+
+@api.route('/groupe4/api/posts', methods=["GET"])
+def get_all_posts():
+    all_posts = []
+    posts = Posts.query.all()
+    for post in posts:
+        post_results = {
+            "userId":post.userid,
+            "id":post.postid,
+            "title":post.posttitle,
+            "body":post.postbody,
+        }
+        all_posts.append(post_results)
+    return jsonify({"posts":all_posts})
+
+@api.route('/groupe4/api/users/<int:userid>/albums')
+def get_userid_albums(userid):
+    albums_user = []
+    albums = Albums.query.filter_by(userid=userid).all()
+    for album in albums:
+        all_users_albums = {
+            "userid":album.userid,
+            "id":album.albumid,
+            "albumtitle":album.albumtitle,
+        }
+
+        albums_user.append(all_users_albums)
+    return jsonify({
+        "albums":albums_user
+        })
+     
 
 
 db.init_app(api)
