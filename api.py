@@ -186,7 +186,7 @@ def get_all_photos_album(albumid):
     return jsonify(all_photos_album)
 
 
-@api.route('/groupe4/api/posts', methods=["GET"])
+@api.route(URL+'posts', methods=["GET"])
 def get_all_posts():
     all_posts = []
     posts = Posts.query.all()
@@ -200,7 +200,7 @@ def get_all_posts():
         all_posts.append(post_results)
     return jsonify({"posts":all_posts})
 
-@api.route('/groupe4/api/users/<int:userid>/albums')
+@api.route(URL+'users/<int:userid>/albums')
 def get_userid_albums(userid):
     albums_user = []
     albums = Albums.query.filter_by(userid=userid).all()
