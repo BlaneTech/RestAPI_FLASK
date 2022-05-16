@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from database import *
@@ -133,45 +134,90 @@ def get_only_user(userid):
                 "bs":company.companybs
                 },
         }
-    return jsonify(user=one_user_result)
+    return jsonify(one_user_result)
 
-@api.route(URL+'users/<int:userid>/posts')
-def get_posts_user(userid):
-    all_posts_user=[]
-    posts_users=Posts.query.filter_by(userid=userid).all()
-    for  posts_user in posts_users:
-        all_posts_user_result={
-            "userid":posts_user.userid, 
-            "id":posts_user.postid,
-            "title":posts_user.posttitle,
-            "body":posts_user.postbody  
+
+@api.route(URL+'users/<int:userid>/photos')  
+def get_all_photos_users(userid):
+    all_photos_user=[]
+    all_albums=Albums.query.filter_by(userid=userid).all()
+    for album_user in all_albums:
+        albumId = album_user.albumid
+        all_photos=Photos.query.filter_by(albumid=albumId).all()
+        for photos_user in all_photos:
+            all_photos_user_results={
+                "albumId":photos_user.albumid,
+                "id":photos_user.photoid,
+                "title":photos_user.phototitle,
+                "url":photos_user.photourl,
+                "thumbnailUrl":photos_user.photothumbnailurl,
+            }
+            all_photos_user.append(all_photos_user_results)
+    return jsonify(all_photos_user)
+
+@api.route(URL+'posts/<int:postid>/comments')
+def get_all_comments_post(postid):
+    all_comments_post=[]
+    all_comment = Comment.query.filter_by(postid=postid).all()
+    for comment_post in all_comment:
+        all_comments_post_results={
+            "postid":comment_post.postid,
+            "id":comment_post.commentid,
+            "name":comment_post.commentname,
+            "email":comment_post.commentemail,
+            "body":comment_post.commentbody,
         }
-        all_posts_user.append(all_posts_user_result)
-    return jsonify(posts_user=all_posts_user)
+        all_comments_post.append(all_comments_post_results)
+    return jsonify(all_comments_post)
 
-@api.route(URL+'users/<int:userid>/todos')
-def get_todos_user(userid):
-    all_todos_user=[]
-    todos_users=Todo.query.filter_by(userid=userid).all()
-    for  todo_user in todos_users:
-        all_todos_user_result={
-            "userid":todo_user.userid, 
-            "id":todo_user.todoid,
-            "title":todo_user.todotitle,
-            "body":todo_user.todoetat  
+@api.route(URL+'albums/<int:albumid>/photos')
+def get_all_photos_album(albumid):
+    all_photos_album = []
+    all_photos = Photos.query.filter_by(albumid=albumid).all()
+    for photos_album in all_photos:
+        photos_album_results={
+            "albumId":photos_album.albumid,
+            "id":photos_album.photoid,
+            "title":photos_album.phototitle,
+            "url":photos_album.photourl,
+            "thumbnailUrl":photos_album.photothumbnailurl,
         }
-        all_todos_user.append(all_todos_user_result)
-    return jsonify(todos_user=all_todos_user)
+        all_photos_album.append(photos_album_results)
+    return jsonify(all_photos_album)
 
 
-    
+@api.route(URL+'posts', methods=["GET"])
+def get_all_posts():
+    all_posts = []
+    posts = Posts.query.all()
+    for post in posts:
+        post_results = {
+            "userId":post.userid,
+            "id":post.postid,
+            "title":post.posttitle,
+            "body":post.postbody,
+        }
+        all_posts.append(post_results)
+    return jsonify({"posts":all_posts})
 
+@api.route(URL+'users/<int:userid>/albums')
+def get_userid_albums(userid):
+    albums_user = []
+    albums = Albums.query.filter_by(userid=userid).all()
+    for album in albums:
+        all_users_albums = {
+            "userid":album.userid,
+            "id":album.albumid,
+            "albumtitle":album.albumtitle,
+        }
 
-
-
- 
-    
+        albums_user.append(all_users_albums)
+    return jsonify({
+        "albums":albums_user
+        })
+     
 
 
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
+
