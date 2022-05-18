@@ -1,7 +1,6 @@
 from crypt import methods
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from requests import request
 from database import *
 
 api=Flask(__name__)
@@ -215,8 +214,12 @@ def get_userid_albums(userid):
     return jsonify(albums_user)
     
 # POST REQUEST
-user_schema = Users()
-# users_schema = Users(many=True)
+def gestionId(table_name, col_name):
+    list_id=set()
+    ids = table_name.query.with_entities(col_name).all()
+    for id in ids:
+        list_id.add(id[0])
+    return max(list_id)+1
 
 @api.route(URL+'user', methods=['POST'])
 def add_user():
@@ -240,11 +243,14 @@ def add_user():
     catchPhrase = request.json['catchPhrase']
     bs = request.json['bs']    
 
-    new_user = Users(name=name, username=username,email=email, phone=phone, website=website)
+    userid=gestionId(Users,Users.userid)
+    addressid=gestionId(Address,Address.addressid)
+    companyid=gestionId(Company,Company.companyid)
+    new_user = Users(userid=userid, name=name, username=username,email=email, phone=phone, website=website)
 
-    new_address = Address(street=street, suite=suite, city=city, zipcode=zipcode, geo_lat = lat, geo_lng=lng)
+    new_address = Address(addressid=addressid, street=street, suite=suite, city=city, zipcode=zipcode, geo_lat = lat, geo_lng=lng,userid=userid)
     
-    new_company = Company(companyname=company_name, companycatchphrase=catchPhrase, companybs=bs)
+    new_company = Company(companyid=companyid, companyname=company_name, companycatchphrase=catchPhrase, companybs=bs,userid=userid)
     if Users.query.filter_by(email=email).count() == 0:
         db.session.add(new_user)
         db.session.add(new_address)
@@ -255,25 +261,56 @@ def add_user():
         return "Email already exist"
 
 
-@api.route(URL+'users/<int:userid>/albums',methods=["POST"])
-def add_userid_albums(userid):
-    #userid=request.json['userid']
-    #albumtitle=request.json['albumtitle']
-    #new_album=Albums(userid=userid,albumtitle=albumtitle)
-    #db.session.add(new_album)
-    #db.session.commit()
-    #print(userid,albumtitle,"sidhfifhif")
-    # albums_results = {
-            # 'userId':request.json['userId'],
-            # 'albumtitle':request.json['albumtitle']}
-
-    #donnee_posts = Albums(albumtitle = albums_results['albumtitle'],  userid = albums_results['userId'])
-    #db.session.add(donnee_posts)
-    #db.session.commit()
-    #return jsonify({'new_album':albums_results})
+@api.route(URL+'users/<int:userid>/albums',methods=['POST'])
+def add_album(userid):
+    userid=request.json['userid']
+    albumtitle=request.json['albumtitle']
+    albumid=gestionId(Albums,Albums.albumid)
+    new_album=Albums(albumid=albumid, userid=userid,albumtitle=albumtitle)
+    db.session.add(new_album)
+    db.session.commit()
 
 
     return "ok"
+
+@api.route(URL+'users/<int:userid>/todo',methods=['POST'])
+def add_todo(userid):
+    userid=request.json['userid']
+    todotitle=request.json['todotitle']
+    todoetat=request.json['todoetat']
+    todoid=gestionId(Todo,Todo.todoid)
+    new_todo=Todo(todoid=todoid, userid=userid,todotitle=todotitle,todoetat=todoetat)
+    db.session.add(new_todo)
+    db.session.commit()
+    return "Todo ajouter"
+
+@api.route(URL+'users/<int:userid>/posts',methods=['POST'])
+def add_post(userid):
+    userid=request.json['userid']
+    posttitle=request.json['posttitle']
+    postbody=request.json['postbody']
+    postid=gestionId(Posts,Posts.postid)
+    new_post=Todo(postid=postid, userid=userid,posttitle=posttitle,postbody=postbody)
+    db.session.add(new_post)
+    db.session.commit()
+    return "Post ajouter"
+
+@api.route(URL+'albums/<int:albumid>/photos',methods=['POST'])
+def add_post(albumid):
+    albumid=request.json['albumid']
+    phototitle=request.json['phototitle']
+    photourl=request.json['photourl']
+    photothumbnailurl=request.json['photothumbnailurl']
+    photoid=gestionId(Photos,Photos.photoid)
+    new_photo=Photos(photoid=photoid, albumid=albumid,phototitle=phototitle,photourl=photourl,photothumbnailurl=photothumbnailurl)
+    db.session.add(new_photo)
+    db.session.commit()
+    return "Photo ajouter"
+
+
+
+
+
 
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
