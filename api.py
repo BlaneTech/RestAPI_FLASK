@@ -5,7 +5,7 @@ from requests import request
 from database import *
 
 api=Flask(__name__)
-api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://groupe4:test123@localhost/dbcreateapi'
+api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://groupe4:test123@localhost/projetflask'
 api.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 api.config['JSON_SORT_KEYS']=False
 
@@ -256,12 +256,14 @@ def add_user():
 
 
 @api.route(URL+'users/<int:userid>/albums',methods=["POST"])
-def add_userid_albums():
-    userid=request.json['userid']
-    albumtitle=request.json['albumtitle']
+def add_userid_albums(userid):
+    #userid=request.json['userid']
+    #print(request,userid)
+    #albumtitle=request.json['albumtitle']
     new_album=Albums(userid=userid,albumtitle=albumtitle)
     db.session.add(new_album)
     db.session.commit()
+    #print(userid,albumtitle,"sidhfifhif")
     return "ok"
 
 db.init_app(api)
