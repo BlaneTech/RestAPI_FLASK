@@ -213,8 +213,12 @@ def get_userid_albums(userid):
     return jsonify(albums_user)
     
 # POST REQUEST
-user_schema = Users()
-# users_schema = Users(many=True)
+def gestionId(table_name, col_name):
+    list_id=set()
+    ids = table_name.query.with_entities(col_name).all()
+    for id in ids:
+        list_id.add(id[0])
+    return max(list_id)+1
 
 @api.route(URL+'user', methods=['POST'])
 def add_user():
@@ -238,11 +242,14 @@ def add_user():
     catchPhrase = request.json['catchPhrase']
     bs = request.json['bs']    
 
-    new_user = Users(name=name, username=username,email=email, phone=phone, website=website)
+    userid=gestionId(Users,Users.userid)
+    addressid=gestionId(Address,Address.addressid)
+    companyid=gestionId(Company,Company.companyid)
+    new_user = Users(userid=userid, name=name, username=username,email=email, phone=phone, website=website)
 
-    new_address = Address(street=street, suite=suite, city=city, zipcode=zipcode, geo_lat = lat, geo_lng=lng)
+    new_address = Address(addressid=addressid, street=street, suite=suite, city=city, zipcode=zipcode, geo_lat = lat, geo_lng=lng,userid=userid)
     
-    new_company = Company(companyname=company_name, companycatchphrase=catchPhrase, companybs=bs)
+    new_company = Company(companyid=companyid, companyname=company_name, companycatchphrase=catchPhrase, companybs=bs,userid=userid)
     if Users.query.filter_by(email=email).count() == 0:
         db.session.add(new_user)
         db.session.add(new_address)
@@ -251,6 +258,20 @@ def add_user():
         return "ok"
     else:
         return "Email already exist"
+
+
+@api.route(URL+'users/<int:userid>/albums',methods=['POST'])
+def add_album(userid):
+    userid=request.json['userid']
+    # print(request,userid)
+    albumtitle=request.json['albumtitle']
+    albumid=gestionId(Albums,Albums.albumid)
+    new_album=Albums(albumid=albumid, userid=userid,albumtitle=albumtitle)
+    db.session.add(new_album)
+    db.session.commit()
+    #print(userid,albumtitle,"sidhfifhif")
+    return "ok"
+
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
 
