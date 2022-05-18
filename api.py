@@ -1,6 +1,7 @@
 from crypt import methods
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from requests import request
 from database import *
 
 api=Flask(__name__)
@@ -215,7 +216,6 @@ def get_userid_albums(userid):
     return jsonify({
         "albums":albums_user
         })
-     
 
 
 db.init_app(api)
