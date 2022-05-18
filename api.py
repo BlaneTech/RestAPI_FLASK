@@ -258,12 +258,21 @@ def add_user():
 @api.route(URL+'users/<int:userid>/albums',methods=["POST"])
 def add_userid_albums(userid):
     #userid=request.json['userid']
-    #print(request,userid)
     #albumtitle=request.json['albumtitle']
-    new_album=Albums(userid=userid,albumtitle=albumtitle)
-    db.session.add(new_album)
-    db.session.commit()
+    #new_album=Albums(userid=userid,albumtitle=albumtitle)
+    #db.session.add(new_album)
+    #db.session.commit()
     #print(userid,albumtitle,"sidhfifhif")
+    # albums_results = {
+            # 'userId':request.json['userId'],
+            # 'albumtitle':request.json['albumtitle']}
+
+    #donnee_posts = Albums(albumtitle = albums_results['albumtitle'],  userid = albums_results['userId'])
+    #db.session.add(donnee_posts)
+    #db.session.commit()
+    #return jsonify({'new_album':albums_results})
+
+
     return "ok"
 
 db.init_app(api)
