@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 api = Flask(__name__)
-api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://groupe4:test123@localhost/dbcreateapi'
+api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://groupe4:test123@localhost/projetflask'
 api.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(api)
