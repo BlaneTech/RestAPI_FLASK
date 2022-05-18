@@ -1,11 +1,11 @@
-from crypt import methods
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from database import *
 
 api=Flask(__name__)
-api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://groupe4:test123@localhost/projetflask'
+api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://groupe4:test123@localhost/dbcreateapi'
 api.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+api.config['JSON_SORT_KEYS']=False
 
 URL='/groupe4/api/'
 
@@ -46,9 +46,7 @@ def get_all_users():
         }
         all_users.append(user_results)
     # print(all_users)
-    return jsonify(
-        users=all_users
-    )
+    return jsonify(all_users)
 
 @api.route(URL+'comments')
 def get_all_comments():
@@ -62,7 +60,7 @@ def get_all_comments():
             "body":comment.commentbody,
         }
         all_comments.append(comment_results)
-    return jsonify(Comments=all_comments)
+    return jsonify(all_comments)
 
 @api.route(URL+'todos')
 def get_all_todos():
@@ -76,7 +74,7 @@ def get_all_todos():
             "completed":todo.todoetat,
         }
         all_todos.append(todo_results)
-    return jsonify(Todos=all_todos)
+    return jsonify(all_todos)
 
 @api.route(URL+'albums')
 def get_all_albums():
@@ -89,7 +87,7 @@ def get_all_albums():
             "title":album.albumtitle
         }
         all_albums.append(album_results)
-    return jsonify(All_albums=all_albums)
+    return jsonify(all_albums)
 
 @api.route(URL+'photos')
 def get_all_photos():
@@ -104,7 +102,7 @@ def get_all_photos():
             "thumbnailUrl":photo.photothumbnailurl,
         }
         all_photos.append(photo_results)
-    return jsonify(all_photos=all_photos)
+    return jsonify(all_photos)
 
 @api.route(URL+'users/<int:userid>')
 def get_only_user(userid):
@@ -198,7 +196,7 @@ def get_all_posts():
             "body":post.postbody,
         }
         all_posts.append(post_results)
-    return jsonify({"posts":all_posts})
+    return jsonify(all_posts)
 
 @api.route(URL+'users/<int:userid>/albums')
 def get_userid_albums(userid):
@@ -212,12 +210,47 @@ def get_userid_albums(userid):
         }
 
         albums_user.append(all_users_albums)
-    return jsonify({
-        "albums":albums_user
-        })
-     
+    return jsonify(albums_user)
+    
+# POST REQUEST
+user_schema = Users()
+# users_schema = Users(many=True)
 
+@api.route(URL+'user', methods=['POST'])
+def add_user():
+    # data foer table Users
+    name=request.json['name']
+    username=request.json['username']
+    email=request.json['email']
+    phone= request.json['phone'],
+    website=request.json['website']
+    
+    # data for table Address
+    street=request.json['street']
+    suite=request.json['suite']
+    city=request.json['city']
+    zipcode = request.json['zipcode']
+    lat = request.json['lat']
+    lng = request.json['lng']
 
+    #data for table Company 
+    company_name = request.json['company_name']
+    catchPhrase = request.json['catchPhrase']
+    bs = request.json['bs']    
+
+    new_user = Users(name=name, username=username,email=email, phone=phone, website=website)
+
+    new_address = Address(street=street, suite=suite, city=city, zipcode=zipcode, geo_lat = lat, geo_lng=lng)
+    
+    new_company = Company(companyname=company_name, companycatchphrase=catchPhrase, companybs=bs)
+    if Users.query.filter_by(email=email).count() == 0:
+        db.session.add(new_user)
+        db.session.add(new_address)
+        db.session.add(new_company)
+        db.session.commit()
+        return "ok"
+    else:
+        return "Email already exist"
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
 
