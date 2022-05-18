@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from requests import request
@@ -252,6 +253,17 @@ def add_user():
         return "ok"
     else:
         return "Email already exist"
+
+
+@api.route(URL+'users/<int:userid>/albums',methods=["POST"])
+def add_userid_albums():
+    userid=request.json['userid']
+    albumtitle=request.json['albumtitle']
+    new_album=Albums(userid=userid,albumtitle=albumtitle)
+    db.session.add(new_album)
+    db.session.commit()
+    return "ok"
+
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
 
