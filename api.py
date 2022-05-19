@@ -320,7 +320,7 @@ def updateAlbums(albumid):
     albumtitle = request.json['albumtitle']
     update_Album.albumtitle = albumtitle
     db.session.commit()
-    return "ok"
+    return "album modifié"
 
 
 
