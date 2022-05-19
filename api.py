@@ -374,12 +374,12 @@ def update_post(postid):
 ##############################################
 ###################DELETE REQUEST #############
 ###############################################
-
+status=0
 @api.route(URL+'albums/<int:albumid>', methods=['DELETE'])
 def archive_one_album(albumid):
     archive_album = Albums.query.filter_by(albumid = albumid, archive = 1).first()
     archive_photos_album = Photos.query.filter_by(albumid=albumid, archive = 1).all()
-    status = request.json['status']
+    
 
     for photo in archive_photos_album:
         photo.archive = status
@@ -390,7 +390,7 @@ def archive_one_album(albumid):
 @api.route(URL+'todos/<int:todoid>', methods=['DELETE'])
 def archive_one_todo(todoid):
     archive_todo = Todo.query.filter_by(todoid = todoid, archive = 1).first()
-    status = request.json['status']
+    
     archive_todo.archive=status
     db.session.commit()
     return "Suppression valider"
@@ -398,7 +398,7 @@ def archive_one_todo(todoid):
 @api.route(URL+'comments/<int:commentid>', methods=['DELETE'])
 def archive_one_comment(commentid):
     archive_comment = Comment.query.filter_by(commentid = commentid, archive = 1).first()
-    status = request.json['status']
+    
     archive_comment.archive=status
     db.session.commit()
     return "commentaire supprimer"
@@ -406,7 +406,7 @@ def archive_one_comment(commentid):
 @api.route(URL+'posts/<int:postid>', methods=['DELETE'])
 def archive_one_post(postid):
     archive_post = Posts.query.filter_by(postid = postid, archive = 1).first()
-    status = request.json['status']
+    
     archive_post.archive=status
     db.session.commit()
     return "post supprimer"
@@ -415,7 +415,7 @@ def archive_one_post(postid):
 @api.route(URL+'photos', methods=['DELETE'])
 def archive_all_photos():
     all_photo = Photos.query.filter_by(archive = 1).all()
-    status = request.json['status']
+    
     for photo in all_photo:
         photo.archive=status
     db.session.commit()
@@ -423,14 +423,52 @@ def archive_all_photos():
 
 
 @api.route(URL+'posts', methods=['DELETE'])
-def archive_all_posts()
+def archive_all_posts():
+    pass
 
+@api.route(URL+'todos', methods=['DELETE'])
+def archive_all_todos():
+    all_todos = Todo.query.fiter_by(archive=1).all()
+    
+    for todo in all_todos:
+        todo.archive = status
+    return "archive all todos succesfully"
 
+@api.route(URL+'albums/<int:albumid>/photos', methods=['DELETE'])
+def archive_all_photos_in_a_album(albumid):
+    all_photos = Photos.query.filter_by(albumid=albumid,archive=1)
+    
+    for photo in all_photos:
+        photo.archive = status
+    db.session.commit()
+    return "photos are succesfully archived"
 
+@api.route(URL+'posts/<int:postid>/comments', methods=['DELETE'])
+def archive_all_comments_in_a_pots(postid):
+    all_comments = Comment.query.filter_by(postid=postid, archive=1)
+    
+    for comment in all_comments:
+        comment.archive = status
+    db.session.commit()
+    return "Comments are succefully archived"
 
+@api.route(URL+'/comments', methods=['DELETE'])
+def archive_all_comments():
+    all_comments = Comment.query.filter_by(archive=1).all()
+    for comment in all_comments:
+        comment.archive=status
+    db.session.commit()
+    return "all comments are succesfulluy archived"
 
-
-
+@api.route(URL+'users/<int:userid>/photos', methods=['DELETE'])
+def archive_all_photos_user(userid):
+    all_albums = Albums.query.filter_by(userid=userid, archive=1).all()
+    for album in all_albums:
+        all_photos_album = Photos.query.filter_by(albumid=album.albumid, archive=1).all()
+        for photo in all_photos_album:
+            photo.archive = status
+    db.session.commit()
+    return "all photos are succesfully archived"
 
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
