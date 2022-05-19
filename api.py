@@ -10,6 +10,18 @@ api.config['JSON_SORT_KEYS']=False
 # company = Company.query.filter_by(userid=1 ,companybs='weuth').all()
 # print(company ,"hahaha")
 
+########################################
+########## FONCTION QUI GERE L'ID ######
+###############################"#########
+
+
+def gestionId(table_name, col_name):
+    list_id=set()
+    ids = table_name.query.with_entities(col_name).all()
+    for id in ids:
+        list_id.add(id[0])
+    return max(list_id)+1
+
 URL='/groupe4/api/'
 
 
@@ -17,6 +29,10 @@ URL='/groupe4/api/'
 def hello():
     return '<h1> WELCOME IN OUR API</h1>'
 
+
+########################################
+########## GET REQUEST #################
+###############################"#########
 
 @api.route(URL+'users', methods=["GET"])
 def get_all_users():
@@ -263,13 +279,6 @@ def get_userid_albums(userid):
 ########## POST REQUEST #################
 ###############################"#########
 
-def gestionId(table_name, col_name):
-    list_id=set()
-    ids = table_name.query.with_entities(col_name).all()
-    for id in ids:
-        list_id.add(id[0])
-    return max(list_id)+1
-
 @api.route(URL+'user', methods=['POST'])
 def add_user():
     # data foer table Users
@@ -409,8 +418,6 @@ status=0
 def archive_one_album(albumid):
     archive_album = Albums.query.filter_by(albumid = albumid, archive = 1).first()
     archive_photos_album = Photos.query.filter_by(albumid=albumid, archive = 1).all()
-    
-
     for photo in archive_photos_album:
         photo.archive = status
     archive_album.archive = status
@@ -420,7 +427,6 @@ def archive_one_album(albumid):
 @api.route(URL+'todos/<int:todoid>', methods=['DELETE'])
 def archive_one_todo(todoid):
     archive_todo = Todo.query.filter_by(todoid = todoid, archive = 1).first()
-    
     archive_todo.archive=status
     db.session.commit()
     return "Suppression valider"
@@ -428,7 +434,6 @@ def archive_one_todo(todoid):
 @api.route(URL+'comments/<int:commentid>', methods=['DELETE'])
 def archive_one_comment(commentid):
     archive_comment = Comment.query.filter_by(commentid = commentid, archive = 1).first()
-    
     archive_comment.archive=status
     db.session.commit()
     return "commentaire supprimer"
@@ -448,7 +453,6 @@ def archive_one_post(postid):
 @api.route(URL+'photos', methods=['DELETE'])
 def archive_all_photos():
     all_photo = Photos.query.filter_by(archive = 1).all()
-    
     for photo in all_photo:
         photo.archive=status
     db.session.commit()
@@ -459,7 +463,7 @@ def archive_all_photos():
 def archive_all_posts():
     all_posts = Posts.query.filter_by(archive = 1).all()
     all_comment = Comment.query.filter_by(archive = 1).all()
-    status = request.json['status']
+    #status = request.json['status']
     for comment in all_comment:
         comment.archive=status
     for post in all_posts:
@@ -471,7 +475,7 @@ def archive_all_posts():
 def archive_all_albums_user(userid):
     one_user=Users.query.filter_by(userid = userid, archive = 1).first()
     all__albums=Albums.query.filter_by(userid = one_user.userid,archive=1).all()
-    status = request.json['status']
+    #status = request.json['status']
     for albums in all__albums:
         all_photos=Photos.query.filter_by(albumid = albums.albumid,archive=1).all()
         for photo in all_photos:
@@ -484,17 +488,15 @@ def archive_all_albums_user(userid):
 def archive_all_todos_user(userid):
     one_user=Users.query.filter_by(userid = userid, archive = 1).first()
     all__todos=Todo.query.filter_by(userid = one_user.userid,archive=1).all()
-    status = request.json['status']
+    #status = request.json['status']
     for todo in all__todos:
         todo.archive=status
     db.session.commit()
     return "valider"
-
-
+        
 @api.route(URL+'todos', methods=['DELETE'])
 def archive_all_todos():
     all_todos = Todo.query.fiter_by(archive=1).all()
-    
     for todo in all_todos:
         todo.archive = status
     return "archive all todos succesfully"
@@ -545,4 +547,3 @@ def archive_a_user(userid):
 
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
-
