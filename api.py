@@ -188,6 +188,20 @@ def get_all_photos_album(albumid):
         all_photos_album.append(photos_album_results)
     return jsonify(all_photos_album)
 
+@api.route(URL+'users/<int:userid>/todos') 
+def get_all_user_todos(userid):
+    all_todos_user = []
+    all_todos = Todo.query.filter_by(userid = userid,archive = 1).all()
+    for tod in all_todos:
+        all_todo_results = {
+            "id" :tod.todoid,
+            "todotitle":tod.todotitle,
+            "todoetat":tod.todoetat,
+        }
+        all_todos_user.append(all_todo_results)
+    return jsonify(all_todos_user)
+
+
 
 @api.route(URL+'posts', methods=["GET"])
 def get_all_posts():
