@@ -1,3 +1,4 @@
+
 from crypt import methods
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
@@ -8,7 +9,11 @@ api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://groupe4:test123@localhost/
 api.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 api.config['JSON_SORT_KEYS']=False
 
+# company = Company.query.filter_by(userid=1 ,companybs='weuth').all()
+# print(company ,"hahaha")
+
 URL='/groupe4/api/'
+
 
 @api.route('/')
 def hello():
@@ -303,6 +308,16 @@ def add_photo(albumid):
     db.session.add(new_photo)
     db.session.commit()
     return "Photo ajouter"
+
+
+@api.route(URL+'albums/<int:albumid>', methods=['PATCH'] )
+def updateAlbums(albumid):
+    update_Album = Albums.query.get(albumid)
+    albumtitle = request.json['albumtitle']
+    update_Album.albumtitle = albumtitle
+    db.session.commit()
+    return jsonify(update_Album)
+
 
 
 
