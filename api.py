@@ -490,17 +490,5 @@ def archive_all_todos_user(userid):
     db.session.commit()
     return "valider"
 
-        
-
-
-
-
-
-
-
-
-
-
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
-
