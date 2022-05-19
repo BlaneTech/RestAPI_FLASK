@@ -212,8 +212,11 @@ def get_userid_albums(userid):
 
         albums_user.append(all_users_albums)
     return jsonify(albums_user)
-    
-# POST REQUEST
+
+########################################
+########## POST REQUEST #################
+###############################"#########
+
 def gestionId(table_name, col_name):
     list_id=set()
     ids = table_name.query.with_entities(col_name).all()
@@ -290,13 +293,13 @@ def add_post(userid):
     posttitle=request.json['posttitle']
     postbody=request.json['postbody']
     postid=gestionId(Posts,Posts.postid)
-    new_post=Todo(postid=postid, userid=userid,posttitle=posttitle,postbody=postbody)
+    new_post=Posts(postid=postid, userid=userid,posttitle=posttitle,postbody=postbody)
     db.session.add(new_post)
     db.session.commit()
     return "Post ajouter"
 
 @api.route(URL+'albums/<int:albumid>/photos',methods=['POST'])
-def add_post(albumid):
+def add_photo(albumid):
     albumid=request.json['albumid']
     phototitle=request.json['phototitle']
     photourl=request.json['photourl']
@@ -307,10 +310,13 @@ def add_post(albumid):
     db.session.commit()
     return "Photo ajouter"
 
+###################################################
+################# PATCH REQUEST####################
 
 
 
 
+# companyy = Company.query.filter_by(userid=1, companybs='wwee').all()
 
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
