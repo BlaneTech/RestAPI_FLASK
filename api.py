@@ -339,6 +339,7 @@ def update_comment(commentid):
     comment.commentname=request.json['name']
     comment.commentemail=request.json['email']
     comment.commentbody=request.json['body']
+    db.session.commit()
     return "commentaire modifier"
 
 @api.route(URL+'albums/<int:albumid>', methods=['PATCH'] )
@@ -349,7 +350,13 @@ def updateAlbums(albumid):
     db.session.commit()
     return "ok"
 
-
+@api.route(URL+'posts/<int:postid>', methods=['PATCH'])
+def update_post(postid):
+    post=Posts.query.filter_by(postid=postid ,archive=1).first()
+    post.posttitle=request.json['title']
+    post.postbody=request.json['body']
+    db.session.commit()
+    return "post modifier"
 
 
 
