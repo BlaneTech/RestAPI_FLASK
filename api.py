@@ -209,7 +209,6 @@ def get_userid_albums(userid):
             "id":album.albumid,
             "albumtitle":album.albumtitle,
         }
-
         albums_user.append(all_users_albums)
     return jsonify(albums_user)
     
@@ -269,8 +268,6 @@ def add_album(userid):
     new_album=Albums(albumid=albumid, userid=userid,albumtitle=albumtitle)
     db.session.add(new_album)
     db.session.commit()
-
-
     return "ok"
 
 @api.route(URL+'users/<int:userid>/todo',methods=['POST'])
@@ -290,13 +287,13 @@ def add_post(userid):
     posttitle=request.json['posttitle']
     postbody=request.json['postbody']
     postid=gestionId(Posts,Posts.postid)
-    new_post=Todo(postid=postid, userid=userid,posttitle=posttitle,postbody=postbody)
+    new_post=Posts(postid=postid, userid=userid,posttitle=posttitle,postbody=postbody)
     db.session.add(new_post)
     db.session.commit()
     return "Post ajouter"
 
 @api.route(URL+'albums/<int:albumid>/photos',methods=['POST'])
-def add_post(albumid):
+def add_photo(albumid):
     albumid=request.json['albumid']
     phototitle=request.json['phototitle']
     photourl=request.json['photourl']
