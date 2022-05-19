@@ -1,5 +1,4 @@
 
-from crypt import methods
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from database import *
@@ -317,11 +316,11 @@ def add_photo(albumid):
 
 @api.route(URL+'albums/<int:albumid>', methods=['PATCH'] )
 def updateAlbums(albumid):
-    update_Album = Albums.query.get(albumid)
+    update_Album = Albums.query.filter_by(albumid = albumid, archive = 1).first()
     albumtitle = request.json['albumtitle']
     update_Album.albumtitle = albumtitle
     db.session.commit()
-    return jsonify(update_Album)
+    return "ok"
 
 
 
