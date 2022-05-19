@@ -1,4 +1,4 @@
-from crypt import methods
+
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from database import *
@@ -8,7 +8,11 @@ api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://groupe4:test123@localhost/
 api.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 api.config['JSON_SORT_KEYS']=False
 
+# company = Company.query.filter_by(userid=1 ,companybs='weuth').all()
+# print(company ,"hahaha")
+
 URL='/groupe4/api/'
+
 
 @api.route('/')
 def hello():
@@ -309,7 +313,6 @@ def add_photo(albumid):
 
 ###################################################
 ################# PATCH REQUEST####################
-
 @api.route(URL+'todos/<int:todoid>',methods=['PATCH'])
 def update_todo(todoid):
     todo=Todo.query.filter_by(todoid=todoid,archive=1).first()
@@ -337,6 +340,15 @@ def update_comment(commentid):
     comment.commentemail=request.json['email']
     comment.commentbody=request.json['body']
     return "commentaire modifier"
+
+@api.route(URL+'albums/<int:albumid>', methods=['PATCH'] )
+def updateAlbums(albumid):
+    update_Album = Albums.query.filter_by(albumid = albumid, archive = 1).first()
+    albumtitle = request.json['albumtitle']
+    update_Album.albumtitle = albumtitle
+    db.session.commit()
+    return "ok"
+
 
 
 
