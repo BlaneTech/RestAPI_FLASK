@@ -201,6 +201,35 @@ def get_all_user_todos(userid):
     return jsonify(all_todos_user)
 
 
+@api.route(URL+'comment/<int:commentid>')
+def get_all_comment(commentid):
+    all_commentid = []
+    all_comment = Comment.query.filter_by(commentid = commentid,archive = 1).all()
+    for comment_id in all_comment:
+        all_commentid_results ={
+            "postid":comment_id.postid,
+            "name":comment_id.commentname,
+            "email":comment_id.commentemail,
+            "body":comment_id.commentbody,
+        }
+        all_commentid.append(all_commentid_results)
+    return jsonify(all_commentid)
+
+@api.route(URL+'posts/<int:postid>')
+def get_all_postid(postid):
+    all_postid = []
+    all_posts = Posts.query.filter_by(postid = postid, archive = 1)
+    for post_id in all_posts:
+        all_postid_results = {
+            "posttitle":post_id.posttitle,
+            "body":post_id.postbody,
+            "userid":post_id.userid
+        }
+        all_postid.append(all_postid_results)
+    return jsonify(all_postid)
+
+
+
 
 @api.route(URL+'posts', methods=["GET"])
 def get_all_posts():
@@ -228,6 +257,7 @@ def get_userid_albums(userid):
         }
         albums_user.append(all_users_albums)
     return jsonify(albums_user)
+
 
 ########################################
 ########## POST REQUEST #################
