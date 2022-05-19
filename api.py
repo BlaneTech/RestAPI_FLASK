@@ -310,6 +310,34 @@ def add_photo(albumid):
 ###################################################
 ################# PATCH REQUEST####################
 
+@api.route(URL+'todos/<int:todoid>',methods=['PATCH'])
+def update_todo(todoid):
+    todo=Todo.query.filter_by(todoid=todoid,archive=1).first()
+    todo.todoetat=request.json['completed']
+    todo.todotitle=request.json['title']
+    db.session.commit()
+    return "todo modifier"
+
+
+
+
+@api.route(URL+'photos/<int:photoid>',methods=['PATCH'])
+def update_photo(photoid):
+    photo=Photos.query.filter_by(photoid=photoid,archive=1).first()
+    photo.phototitle=request.json['title']
+    photo.photourl=request.json['url']
+    photo.photothumbnailurl=request.json['thumbnailUrl']
+    db.session.commit()
+    return "photo modifier"
+
+@api.route(URL+'comments/<int:commentid>',methods=['PATCH'])
+def update_comment(commentid):
+    comment=Comment.query.filter_by(commentid=commentid,archive=1).first()
+    comment.commentname=request.json['name']
+    comment.commentemail=request.json['email']
+    comment.commentbody=request.json['body']
+    return "commentaire modifier"
+
 
 
 
