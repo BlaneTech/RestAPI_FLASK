@@ -23,7 +23,7 @@ def hello():
 @api.route(URL+'users', methods=["GET"])
 def get_all_users():
     all_users=[]
-    users = Users.query.all()
+    users = Users.query.filter_by(archive=1).all()
     address = Address.query.all()
     company = Company.query.all()
     for k in range(len(users)):
@@ -56,7 +56,7 @@ def get_all_users():
 
 @api.route(URL+'comments')
 def get_all_comments():
-    comments=Comment.query.all()
+    comments=Comment.query.filter_by(archive=1).all()
     all_comments=[]
     for comment in comments:
         comment_results={
@@ -70,7 +70,7 @@ def get_all_comments():
 
 @api.route(URL+'todos')
 def get_all_todos():
-    todos=Todo.query.all()
+    todos=Todo.query.filter_by(archive=1).all()
     all_todos=[]
     for todo in todos:
         todo_results={
@@ -84,7 +84,7 @@ def get_all_todos():
 
 @api.route(URL+'albums')
 def get_all_albums():
-    albums=Albums.query.all()
+    albums=Albums.query.filter_by(archive=1).all()
     all_albums=[]
     for album in albums:
         album_results={
@@ -97,7 +97,7 @@ def get_all_albums():
 
 @api.route(URL+'photos')
 def get_all_photos():
-    photos=Photos.query.all()
+    photos=Photos.query.filter_by(archive=1).all()
     all_photos=[]
     for photo in photos:
         photo_results={
@@ -113,8 +113,8 @@ def get_all_photos():
 @api.route(URL+'users/<int:userid>')
 def get_only_user(userid):
     user=Users.query.get(userid)
-    address = Address.query.filter_by(userid=userid).first()
-    company = Company.query.filter_by(userid=userid).first()
+    address = Address.query.filter_by(userid=userid, archive=1).first()
+    company = Company.query.filter_by(userid=userid, archive=1).first()
     one_user_result = {
             "id":user.userid,
             "name":user.name,
@@ -144,10 +144,10 @@ def get_only_user(userid):
 @api.route(URL+'users/<int:userid>/photos')  
 def get_all_photos_users(userid):
     all_photos_user=[]
-    all_albums=Albums.query.filter_by(userid=userid).all()
+    all_albums=Albums.query.filter_by(userid=userid, archive=1).all()
     for album_user in all_albums:
         albumId = album_user.albumid
-        all_photos=Photos.query.filter_by(albumid=albumId).all()
+        all_photos=Photos.query.filter_by(albumid=albumId, archive=1).all()
         for photos_user in all_photos:
             all_photos_user_results={
                 "albumId":photos_user.albumid,
@@ -162,7 +162,7 @@ def get_all_photos_users(userid):
 @api.route(URL+'posts/<int:postid>/comments')
 def get_all_comments_post(postid):
     all_comments_post=[]
-    all_comment = Comment.query.filter_by(postid=postid).all()
+    all_comment = Comment.query.filter_by(postid=postid, archive=1).all()
     for comment_post in all_comment:
         all_comments_post_results={
             "postid":comment_post.postid,
@@ -177,7 +177,7 @@ def get_all_comments_post(postid):
 @api.route(URL+'albums/<int:albumid>/photos')
 def get_all_photos_album(albumid):
     all_photos_album = []
-    all_photos = Photos.query.filter_by(albumid=albumid).all()
+    all_photos = Photos.query.filter_by(albumid=albumid, archive=1).all()
     for photos_album in all_photos:
         photos_album_results={
             "albumId":photos_album.albumid,
@@ -193,7 +193,7 @@ def get_all_photos_album(albumid):
 @api.route(URL+'posts', methods=["GET"])
 def get_all_posts():
     all_posts = []
-    posts = Posts.query.all()
+    posts = Posts.query.filter_by(archive=1).all()
     for post in posts:
         post_results = {
             "userId":post.userid,
@@ -207,7 +207,7 @@ def get_all_posts():
 @api.route(URL+'users/<int:userid>/albums')
 def get_userid_albums(userid):
     albums_user = []
-    albums = Albums.query.filter_by(userid=userid).all()
+    albums = Albums.query.filter_by(userid=userid,archive=1).all()
     for album in albums:
         all_users_albums = {
             "userid":album.userid,
@@ -216,8 +216,11 @@ def get_userid_albums(userid):
         }
         albums_user.append(all_users_albums)
     return jsonify(albums_user)
-    
-# POST REQUEST
+
+########################################
+########## POST REQUEST #################
+###############################"#########
+
 def gestionId(table_name, col_name):
     list_id=set()
     ids = table_name.query.with_entities(col_name).all()
@@ -309,6 +312,8 @@ def add_photo(albumid):
     db.session.commit()
     return "Photo ajouter"
 
+###################################################
+################# PATCH REQUEST####################
 
 @api.route(URL+'albums/<int:albumid>', methods=['PATCH'] )
 def updateAlbums(albumid):
@@ -323,6 +328,7 @@ def updateAlbums(albumid):
 
 
 
+# companyy = Company.query.filter_by(userid=1, companybs='wwee').all()
 
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
