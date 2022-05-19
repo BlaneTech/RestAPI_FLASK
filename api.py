@@ -347,12 +347,23 @@ def updateAlbums(albumid):
     update_Album.albumtitle = albumtitle
     db.session.commit()
     return "ok"
+##############################################
+###################DELETE REQUEST #############
+###############################################
+
+@api.route(URL+'albums/<int:albumid>', methods=['DELETE'])
+def archive_one_album(albumid):
+    archive_album = Albums.query.filter_by(albumid = albumid, archive = 1).first()
+    archive_photos_album = Photos.query.filter_by(albumid=albumid, archive = 1).all()
+    status = request.json['status']
+    for photo in archive_photos_album:
+        photo.archive = status
+    archive_album.archive = status
+    db.session.commit()
+    return "Ok"
 
 
 
-
-
-# companyy = Company.query.filter_by(userid=1, companybs='wwee').all()
 
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)

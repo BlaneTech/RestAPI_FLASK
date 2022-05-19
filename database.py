@@ -89,7 +89,6 @@ class Comment(db.Model):
     postid = db.Column(db.Integer, db.ForeignKey('posts.postid'))
     archive = db.Column(db.Integer,default=1)
 
-
 if __name__ == '__main__':
     db.drop_all()
     db.create_all()
