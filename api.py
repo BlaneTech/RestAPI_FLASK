@@ -436,14 +436,10 @@ def archive_one_comment(commentid):
 @api.route(URL+'posts/<int:postid>', methods=['DELETE'])
 def archive_one_post(postid):
     archive_post = Posts.query.filter_by(postid = postid, archive = 1).first()
-<<<<<<< HEAD
-    
-=======
     archive_comments_post=Comment.query.filter_by(postid=archive_post.postid,archive=1).all()
     status = request.json['status']
     for comment in archive_comments_post:
         comment.archive=status
->>>>>>> b68532997f2e7d3865c8390caff5920abe3be421
     archive_post.archive=status
     db.session.commit()
     return "post supprimer"
@@ -494,12 +490,6 @@ def archive_all_todos_user(userid):
     db.session.commit()
     return "valider"
 
-        
-
-
-
-
-
 
 @api.route(URL+'todos', methods=['DELETE'])
 def archive_all_todos():
@@ -544,6 +534,14 @@ def archive_all_photos_user(userid):
             photo.archive = status
     db.session.commit()
     return "all photos are succesfully archived"
+
+@api.route(URL+'users/<int:userid>')
+def archive_a_user(userid):
+    user = Users.query.filter_by(userid=userid, archive=1).first()
+    user_address = Address.querry.filter_by(userid=userid, archive=1).first()
+    user_company = Company.query.filter_by(userid=1, archive=1).first()
+    all_user_posts= Posts.query.filter_by(userid=userid, archive=1).all()
+    
 
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
