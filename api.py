@@ -187,6 +187,20 @@ def get_all_photos_album(albumid):
         all_photos_album.append(photos_album_results)
     return jsonify(all_photos_album)
 
+@api.route(URL+'users/<int:userid>/todos') 
+def get_all_user_todos(userid):
+    all_todos_user = []
+    all_todos = Todo.query.filter_by(userid = userid,archive = 1).all()
+    for tod in all_todos:
+        all_todo_results = {
+            "id" :tod.todoid,
+            "todotitle":tod.todotitle,
+            "todoetat":tod.todoetat,
+        }
+        all_todos_user.append(all_todo_results)
+    return jsonify(all_todos_user)
+
+
 
 @api.route(URL+'posts', methods=["GET"])
 def get_all_posts():
@@ -338,6 +352,7 @@ def update_comment(commentid):
     comment.commentname=request.json['name']
     comment.commentemail=request.json['email']
     comment.commentbody=request.json['body']
+    db.session.commit()
     return "commentaire modifier"
 
 @api.route(URL+'albums/<int:albumid>', methods=['PATCH'] )
@@ -360,9 +375,16 @@ def archive_one_album(albumid):
         photo.archive = status
     archive_album.archive = status
     db.session.commit()
-    return "Ok"
+    return "succesfull"
 
 
+@api.route(URL+'posts/<int:postid>', methods=['PATCH'])
+def update_post(postid):
+    post=Posts.query.filter_by(postid=postid ,archive=1).first()
+    post.posttitle=request.json['title']
+    post.postbody=request.json['body']
+    db.session.commit()
+    return "post modifier"
 
 
 db.init_app(api)
