@@ -361,7 +361,7 @@ def updateAlbums(albumid):
     albumtitle = request.json['albumtitle']
     update_Album.albumtitle = albumtitle
     db.session.commit()
-    return "album modifié"
+    return "ok"
 
 @api.route(URL+'posts/<int:postid>', methods=['PATCH'])
 def update_post(postid):
@@ -371,9 +371,60 @@ def update_post(postid):
     db.session.commit()
     return "post modifier"
 
+##############################################
+###################DELETE REQUEST #############
+###############################################
+
+@api.route(URL+'albums/<int:albumid>', methods=['DELETE'])
+def archive_one_album(albumid):
+    archive_album = Albums.query.filter_by(albumid = albumid, archive = 1).first()
+    archive_photos_album = Photos.query.filter_by(albumid=albumid, archive = 1).all()
+    status = request.json['status']
+
+    for photo in archive_photos_album:
+        photo.archive = status
+    archive_album.archive = status
+    db.session.commit()
+    return "succesfull"
+
+@api.route(URL+'todos/<int:todoid>', methods=['DELETE'])
+def archive_one_todo(todoid):
+    archive_todo = Todo.query.filter_by(todoid = todoid, archive = 1).first()
+    status = request.json['status']
+    archive_todo.archive=status
+    db.session.commit()
+    return "Suppression valider"
+
+@api.route(URL+'comments/<int:commentid>', methods=['DELETE'])
+def archive_one_comment(commentid):
+    archive_comment = Comment.query.filter_by(commentid = commentid, archive = 1).first()
+    status = request.json['status']
+    archive_comment.archive=status
+    db.session.commit()
+    return "commentaire supprimer"
+
+@api.route(URL+'posts/<int:postid>', methods=['DELETE'])
+def archive_one_post(postid):
+    archive_post = Posts.query.filter_by(postid = postid, archive = 1).first()
+    status = request.json['status']
+    archive_post.archive=status
+    db.session.commit()
+    return "post supprimer"
 
 
-# companyy = Company.query.filter_by(userid=1, companybs='wwee').all()
+@api.route(URL+'photos', methods=['DELETE'])
+def archive_all_photos(photoid):
+    all_photo = Photos.query.filter_by(photoid = photoid, archive = 1).all()
+    status = request.json['status']
+    for photo in all_photo:
+        photo.archive=status
+    db.session.commit()
+    return "ALL post are delete"
+
+
+
+
+
 
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
