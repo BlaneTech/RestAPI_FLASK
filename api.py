@@ -413,13 +413,19 @@ def archive_one_post(postid):
 
 
 @api.route(URL+'photos', methods=['DELETE'])
-def archive_all_photos(photoid):
-    all_photo = Photos.query.filter_by(photoid = photoid, archive = 1).all()
+def archive_all_photos():
+    all_photo = Photos.query.filter_by(archive = 1).all()
     status = request.json['status']
     for photo in all_photo:
         photo.archive=status
     db.session.commit()
     return "ALL post are delete"
+
+
+@api.route(URL+'posts', methods=['DELETE'])
+def archive_all_posts()
+
+
 
 
 
