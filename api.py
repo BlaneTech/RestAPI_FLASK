@@ -479,6 +479,17 @@ def archive_all_albums_user(userid):
         albums.archive=status
     db.session.commit()
     return "valider"
+
+@api.route(URL+'users/<int:userid>/todos', methods=['DELETE'])
+def archive_all_todos_user(userid):
+    one_user=Users.query.filter_by(userid = userid, archive = 1).first()
+    all__todos=Todo.query.filter_by(userid = one_user.userid,archive=1).all()
+    status = request.json['status']
+    for todo in all__todos:
+        todo.archive=status
+    db.session.commit()
+    return "valider"
+
         
 
 
