@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from database import *
@@ -452,16 +453,25 @@ def archive_all_photos():
     return "ALL post are delete"
 
 
-@api.route(URL+'posts', methods=['DELETE'])
-def archive_all_posts()
+@api.route(URL+'albums',methods=['DELETE'])
+def archive_all_albums():
+    all_albums=Albums.query.filter_by(archive=1).all()
+    # status = all_albums['status']
+    for album in all_albums:
+        album.archive = status
+    db.session.commit()
+    return "tous les albums sont archivés"
 
 
-
-
-
-
-
-
+@api.route(URL+'photos/<int:photoid>', methods = ['DELETE'])
+def archive_one_photo(photoid):
+    archive_photo = Photos.query.filter_by(photoid = photoid, archive = 1).first()
+    # status = request.json['status']
+    archive_photo.archive = status
+    db.commit()
+    return 'photo archivée'
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
+
+
 
