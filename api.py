@@ -445,7 +445,6 @@ def archive_one_post(postid):
     db.session.commit()
     return "post supprimer"
 
-
 @api.route(URL+'photos', methods=['DELETE'])
 def archive_all_photos():
     all_photo = Photos.query.filter_by(archive = 1).all()
@@ -453,7 +452,6 @@ def archive_all_photos():
         photo.archive=status
     db.session.commit()
     return "ALL post are delete"
-
 
 @api.route(URL+'posts', methods=['DELETE'])
 def archive_all_posts():
@@ -532,5 +530,7 @@ def archive_all_photos_user(userid):
             photo.archive = status
     db.session.commit()
     return "all photos are succesfully archived"
+
+
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
