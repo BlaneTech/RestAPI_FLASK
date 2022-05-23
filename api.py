@@ -491,6 +491,7 @@ def archive_all_todos():
     all_todos = Todo.query.fiter_by(archive=1).all()
     for todo in all_todos:
         todo.archive = status
+    db.session.commit()
     return "archive all todos succesfully"
 
 @api.route(URL+'albums/<int:albumid>/photos', methods=['DELETE'])
@@ -498,6 +499,7 @@ def archive_all_photos_in_a_album(albumid):
     all_photos = Photos.query.filter_by(albumid=albumid,archive=1)
     for photo in all_photos:
         photo.archive = status
+    db.session.commit()
     return "all photos are succesfully archived"
     
 
@@ -521,13 +523,23 @@ def archive_one_photo(photoid):
     db.session.commit()
     return 'photo archivée'
 
-@api.route(URL+'users/<int:userid>/posts')
+@api.route(URL+'users/<int:userid>/posts', methods=['DELETE'])
 def archive_all_post_user (userid):
     archive_all_post = Posts.query.filter_by(userid =userid, archive = 1).all()
     archive_all_post.archive = 0
     db.session.commit()
-    return 'les posts du user x sont archivés'
+    return "all posts are succesfully archived"
+
+# @api.route(URL+'users/<int:userid>')
+# def archive_a_user(userid):
+#     user = Users.query.filter_by(userid=userid, archive=1).first()
+#     user_address = Address.querry.filter_by(userid=userid, archive=1).first()
+#     user_company = Company.query.filter_by(userid=1, archive=1).first()
+#     all_user_posts= Posts.query.filter_by(userid=userid, archive=1).all()
+#     all_user_comment = Comment.query.filter_by(userid=userid, archive=1).all()
+
     
+
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
 
