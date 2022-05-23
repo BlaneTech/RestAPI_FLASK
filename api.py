@@ -496,7 +496,6 @@ def archive_all_todos():
 @api.route(URL+'albums/<int:albumid>/photos', methods=['DELETE'])
 def archive_all_photos_in_a_album(albumid):
     all_photos = Photos.query.filter_by(albumid=albumid,archive=1)
-    
     for photo in all_photos:
         photo.archive = status
     return "all photos are succesfully archived"
@@ -527,8 +526,6 @@ def archive_all_post_user (userid):
     archive_all_post = Posts.query.filter_by(userid =userid, archive = 1).all()
     archive_all_post.archive = 0
     db.session.commit()
-
-
     return 'les posts du user x sont archivés'
     
 db.init_app(api)
