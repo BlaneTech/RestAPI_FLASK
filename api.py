@@ -437,8 +437,8 @@ def archive_one_comment(commentid):
 @api.route(URL+'posts/<int:postid>', methods=['DELETE'])
 def archive_one_post(postid):
     archive_post = Posts.query.filter_by(postid = postid, archive = 1).first()
-    status = request.json['status']
-    archive_post.archive=status
+    # status = request.json['status']
+    archive_post.archive=0
     db.session.commit()
     return "post supprimer"
 
@@ -453,23 +453,38 @@ def archive_all_photos():
     return "ALL post are delete"
 
 
-# @api.route(URL+'albums',methods=['DELETE'])
-# def archive_all_albums():
-#     all_albums=Albums.query.filter_by(archive=1).all()
-#     # status = all_albums['status']
-#     for album in all_albums:
-#         album.archive = status
-#     db.session.commit()
-#     return "tous les albums sont archivés"
+@api.route(URL+'albums',methods=['DELETE'])
+def archive_all_albums():
+    all_albums=Albums.query.filter_by(archive=1).all()
+    # status = all_albums['status']
+    for album in all_albums:
+        album.archive = 0
+    db.session.commit()
+    return "tous les albums sont archivés"
+
+# @api.route(URL+'posts/<int:userid>', methods = ['DELETE'])
+# def removeOne(userid):
+#     onePhoto = [photo for photo in Posts if photo['userid']==userid]
+#     Posts.remove(onePhoto[0])
+#     return 'bien supp'
+    
 
 
-# @api.route(URL+'photos/<int:photoid>', methods = ['DELETE'])
-# def archive_one_photo(photoid):
-#     archive_photo = Photos.query.filter_by(photoid = photoid, archive = 1).first()
-#     # status = request.json['status']
-#     archive_photo.archive = status
-#     db.commit()
-#     return 'photo archivée'
+@api.route(URL+'photos/<int:photoid>', methods = ['DELETE'])
+def archive_one_photo(photoid):
+    archive_photo = Photos.query.filter_by(photoid = photoid, archive = 1).first()
+    # status = request.json['status']
+    archive_photo.archive = 0
+    db.session.commit()
+    return 'photo archivée'
+
+@api.route(URL+'users/<int:userid>/posts')
+def archive_all_post_user (userid):
+    archive_all_post = Posts.query.filter_by(userid =userid, archive = 1).all()
+    archive_all_post.archive = 0
+    db.session.commit()
+    return 'les posts du user x sont archivés'
+    
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
 
