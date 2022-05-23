@@ -537,12 +537,13 @@ def archive_all_photos_user(userid):
     db.session.commit()
     return "all photos are succesfully archived"
 
-@api.route(URL+'users/<int:userid>')
-def archive_a_user(userid):
-    user = Users.query.filter_by(userid=userid, archive=1).first()
-    user_address = Address.querry.filter_by(userid=userid, archive=1).first()
-    user_company = Company.query.filter_by(userid=1, archive=1).first()
-    all_user_posts= Posts.query.filter_by(userid=userid, archive=1).all()
+# @api.route(URL+'users/<int:userid>')
+# def archive_a_user(userid):
+#     user = Users.query.filter_by(userid=userid, archive=1).first()
+#     user_address = Address.querry.filter_by(userid=userid, archive=1).first()
+#     user_company = Company.query.filter_by(userid=1, archive=1).first()
+#     all_user_posts= Posts.query.filter_by(userid=userid, archive=1).all()
+#     all_user_comment = Comment.query.filter_by(userid=userid, archive=1).all()
     
 
 db.init_app(api)
