@@ -491,6 +491,7 @@ def archive_all_todos():
     all_todos = Todo.query.fiter_by(archive=1).all()
     for todo in all_todos:
         todo.archive = status
+    db.session.commit()
     return "archive all todos succesfully"
 
 @api.route(URL+'albums/<int:albumid>/photos', methods=['DELETE'])
@@ -499,6 +500,7 @@ def archive_all_photos_in_a_album(albumid):
     
     for photo in all_photos:
         photo.archive = status
+    db.session.commit()
     return "all photos are succesfully archived"
     
 
@@ -507,7 +509,7 @@ def archive_all_albums():
     all_albums=Albums.query.filter_by(archive=1).all()
     # status = all_albums['status']
     for album in all_albums:
-        album.archive = 0
+        album.archive = status
     db.session.commit()
     return "tous les albums sont archivés"
 
@@ -516,17 +518,27 @@ def archive_all_albums():
 def archive_one_photo(photoid):
     archive_photo = Photos.query.filter_by(photoid = photoid, archive = 1).first()
     # status = request.json['status']
-    archive_photo.archive = 0
+    archive_photo.archive = status
     db.session.commit()
     return 'photo archivée'
 
-@api.route(URL+'users/<int:userid>/posts')
+@api.route(URL+'users/<int:userid>/posts',methods=['DELETE'])
 def archive_all_post_user (userid):
     archive_all_post = Posts.query.filter_by(userid =userid, archive = 1).all()
-    archive_all_post.archive = 0
+    archive_all_post.archive =status
     db.session.commit()
-    return 'les posts du user x sont archivés'
+    return "all posts are succesfully archived"
+
+# @api.route(URL+'users/<int:userid>')
+# def archive_a_user(userid):
+#     user = Users.query.filter_by(userid=userid, archive=1).first()
+#     user_address = Address.querry.filter_by(userid=userid, archive=1).first()
+#     user_company = Company.query.filter_by(userid=1, archive=1).first()
+#     all_user_posts= Posts.query.filter_by(userid=userid, archive=1).all()
+#     all_user_comment = Comment.query.filter_by(userid=userid, archive=1).all()
+
     
+
 db.init_app(api)
 api.run(host='localhost', port=8000, debug=True)
 
