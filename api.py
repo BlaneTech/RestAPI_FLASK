@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from database import *
 
 api=Flask(__name__)
-api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://groupe4:test123@localhost/projetflask'
+api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:test123@localhost/projetflask'
 api.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 api.config['JSON_SORT_KEYS']=False
 
@@ -334,7 +334,7 @@ def add_todo(userid):
 
 @api.route(URL+'users/<int:userid>/posts',methods=['POST'])
 def add_post(userid):
-    userid=request.json['userid']
+    # userid=request.json['userid']
     posttitle=request.json['posttitle']
     postbody=request.json['postbody']
     postid=gestionId(Posts,Posts.postid)
