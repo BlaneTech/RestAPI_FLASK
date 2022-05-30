@@ -4,6 +4,15 @@ function CONNEXION(){
         nom: "dabakh",
         passe:"deme",
     }
+
+    var  COMPTE2 ={
+        nom: "weuthie",
+        passe:"diop"
+    }
+    var COMPTE3 ={
+        nom: "blantech",
+        passe: "diaw"
+    }
     
     var UTILISATEUR = document.getElementById("utilisateur").value.toString().trim();
     var MOTDEPASSE = document.getElementById("motdepasse").value.toString().trim();
@@ -14,7 +23,7 @@ function CONNEXION(){
         myError.innerHTML= "Veuillez renseigner tous les champs"
     }
     else{
-        if (UTILISATEUR==COMPTE.nom && MOTDEPASSE == COMPTE.passe){
+        if ((UTILISATEUR==COMPTE.nom && MOTDEPASSE == COMPTE.passe) || (UTILISATEUR==COMPTE2.nom && MOTDEPASSE == COMPTE2.passe) || (UTILISATEUR==COMPTE3.nom && MOTDEPASSE == COMPTE3.passe)){
             window.location.href="../templates/affiche_user.html";
         }
         else{
