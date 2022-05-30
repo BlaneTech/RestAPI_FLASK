@@ -25,10 +25,13 @@ c.addEventListener("click",(e)=>{
     // console.log(e.target.type)
     if(btn.type == "radio"){ 
         var radio = document.getElementsByName("select");
+        console.log("kfgjlfjkglkjl",radio);
         for( var i=0;i<radio.length;i++){
             radio[i].addEventListener('click',(e)=>{
             var el = document.querySelector(".tr")
-            while(el=el.nextSibling){
+            // radio[i].removeChild('input')
+            console.log("khj",radio[i]);
+            while(el===el.nextSibling){
                 if(el.tagName==="TR"){
                    el.classList.remove("selected")
                 }
@@ -37,23 +40,23 @@ c.addEventListener("click",(e)=>{
             g.parentElement.parentElement.classList.toggle("selected")
             var lesfils=g.parentElement.parentElement
             var listdesfils = lesfils.children
-            for(let i=1;i<listdesfils.length;i++){ 
-            var input2 = document.createElement('input')
-             input2.setAttribute("type","text")
-             console.log("bonsoir");
-             input2.value=listdesfils[i].innerText
-             listdesfils[i].innerText=""
-             listdesfils[i].append(input2)
-            
-        
-        }
 
+            inputs = document.querySelectorAll('.myInput')
+            for(let element of inputs){
+                console.log(element.value);
+                element.parentNode.innerText = element.value
+                element.remove()
+            }
+            for(let i=1;i<listdesfils.length-1;i++){ 
+                var input2 = document.createElement('input')
+                input2.classList.add("myInput")
+                input2.setAttribute("type","text")
+                input2.value=listdesfils[i].innerText
+                listdesfils[i].innerText=""
+                listdesfils[i].append(input2)
+        }
             })
-
         }
-
-        
-
     }else{
         btn.addEventListener('click',(e)=>{
             var input = document.createElement('input')
@@ -64,12 +67,7 @@ c.addEventListener("click",(e)=>{
             input.addEventListener('blur',()=>{
                 console.log(input.value)
                 e.target.innerText=input.value
-                input.remove()
-                // console.log(user.userid)
-            
-            
-
-                
+                input.remove() 
             })
         })
         //console.log(e.target.innerText)
