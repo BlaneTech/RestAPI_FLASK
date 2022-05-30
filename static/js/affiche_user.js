@@ -6,7 +6,7 @@ fetch('http://localhost:8000/groupe4/api/users')
 .then(rep=>{rep.forEach(user=> {
     ligne+=`
     <tr class="tr">      
-        <td ><input type="radio" name="select" ></td>
+        <td class="radio"><input type="radio" name="select" ></td>
         <td class="td">${user.name}</td>
         <td class="td" >${user.email}</td>
         <td class="td" >${user.phone}</td>
