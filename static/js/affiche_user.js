@@ -8,9 +8,7 @@ fetch('http://localhost:8000/groupe4/api/users')
     <tr class="tr">      
         <td ><input type="radio" name="select" ></td>
         <td class="td">${user.name}</td>
-        <td class="td">${user.username}</td>
         <td class="td" >${user.email}</td>
-        <td class="td" >${user.website}</td>
         <td class="td" >${user.phone}</td>
         <td ><input type="button" value="update"> <input type="button" value="delete"> <input type="button" value="voir plus"> </td>
 
