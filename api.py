@@ -566,13 +566,8 @@ def archive_all_albums():
     db.session.commit()
     return "tous les albums sont archivés"
 
-<<<<<<< HEAD
-    
-@api.route(URL+'photos/<int:photoid>', methods = ['DELETE'])
-=======
 
 @api.route(URL + "photos/<int:photoid>", methods=["DELETE"])
->>>>>>> 08ccb4cc031502fe58a708c8bf31fe0ce01d8317
 def archive_one_photo(photoid):
     archive_photo = Photos.query.filter_by(photoid=photoid, archive=1).first()
     # status = request.json['status']
@@ -581,17 +576,10 @@ def archive_one_photo(photoid):
     return "photo archivée"
 
 
-<<<<<<< HEAD
-@api.route(URL+'users/<int:userid>/posts', methods=['DELETE'])
-def archive_all_post_user (userid):
-    archive_all_post = Posts.query.filter_by(userid =userid, archive = 1).all()
-    archive_all_post.archive =status
-=======
 @api.route(URL + "users/<int:userid>/posts", methods=["DELETE"])
 def archive_all_post_user(userid):
     archive_all_post = Posts.query.filter_by(userid=userid, archive=1).all()
     archive_all_post.archive = 0
->>>>>>> 08ccb4cc031502fe58a708c8bf31fe0ce01d8317
     db.session.commit()
     return "all posts are succesfully archived"
 
