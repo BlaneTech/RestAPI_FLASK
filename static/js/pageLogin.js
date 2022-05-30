@@ -29,7 +29,7 @@ function CONNEXION(){
                 myError.style.color = 'red'
 
             if (VALEUR >= 3){
-                alert('vous avez tenter à plusieurs reprises les mauvaises informations de connexion')
+                alert('vous avez tenté à plusieurs reprises les mauvaises informations de connexion')
             }
         }
     }
