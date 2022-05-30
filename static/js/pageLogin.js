@@ -15,7 +15,7 @@ function CONNEXION(){
     }
     else{
         if (UTILISATEUR==COMPTE.nom && MOTDEPASSE == COMPTE.passe){
-            window.location.href="../connexion/auth.html";
+            window.location.href="../templates/affiche_user.html";
         }
         else{
             var VALEUR = parseInt(document.getElementById("nombre").value);
