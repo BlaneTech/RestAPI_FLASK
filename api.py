@@ -1,11 +1,12 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from regex import A
 from database import *
 
 api = Flask(__name__)
 CORS(api)
+api.config['CORS_HEADERS'] = 'Content-Type'
+
 api.config[
     "SQLALCHEMY_DATABASE_URI"
 ] = "postgresql://postgres:test123@localhost/projetflask"
