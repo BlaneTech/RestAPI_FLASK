@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="../static/css/add_user.css">
+    <script src="../static/js/add_user.js" defer></script>
 
     <title>formulaire</title>
 </head>
@@ -14,43 +15,43 @@
 <body>
     <div class="cadre">
         <h2>ADD USER</h2>
-        <form action="/adduser" method="POST">
+        <form action="" id="form" method="POST">
             <fieldset id="gauche">
                 <legend>Donnee Personnel</legend>
-                <input type="text" name="name" placeholder="name" required />
-                <input type="text" name="username" placeholder="username" required />
-                <input type="email" name="email" placeholder="email" required />
-                <input type="text" name="phone" placeholder="phone" required />
-                <input type="text" name="website" placeholder="website" required />
+                <input type="text" name="name" id="name" placeholder="name" required />
+                <input type="text" name="username" id="username" placeholder="username" required />
+                <input type="email" name="email" id="email" placeholder="email" required />
+                <input type="text" name="phone" id="phone" placeholder="phone" required />
+                <input type="text" name="website" id="website" placeholder="website" required />
             </fieldset>
             <div>
                 <fieldset id="milieux">
                     <legend>Address</legend>
-                    <input type="text" name="street" placeholder="street" required />
-                    <input type="text" name="suite" placeholder="suite" required />
-                    <input type="text" name="city" placeholder="city" required />
-                    <input type="text" name="zipcode" placeholder="zipcode" required />
+                    <input type="text" name="street" id="street" placeholder="street" required />
+                    <input type="text" name="suite" id="suite" placeholder="suite" required />
+                    <input type="text" name="city" id="city" placeholder="city" required />
+                    <input type="text" name="zipcode" id="zipcode" placeholder="zipcode" required />
                 </fieldset>
                 <fieldset id="milieux_bas">
                     <legend>Geo</legend>
-                    <input type="number" step="0.1" name="latitude" placeholder="latitude" required />
-                    <input type="number" step="0.1" name="longitude" placeholder="longitude" required />
+                    <input type="number" step="0.1" name="lat" id="lat" placeholder="latitude" required />
+                    <input type="number" step="0.1" name="lng" id="lng" placeholder="longitude" required />
                 </fieldset>
             </div>
             <fieldset id="droite">
                 <legend>Company</legend>
-                <input type="text" name="companyname" placeholder="name" required />
-                <input type="text" name="catchPhrase" placeholder="catchPhrase" required />
-                <input type="text" name="bs" placeholder="bs" required />
+                <input type="text" name="company_name" id="company_name" placeholder="name" required />
+                <input type="text" name="catchPhrase" id="catchPhrase" placeholder="catchPhrase" required />
+                <input type="text" name="bs" id="bs" placeholder="bs" required />
 
             </fieldset>
 
 
-            <button type="submit">ADD</button>
+            <input type="submit" id="submit" value="AJOUTER">
         </form>
 
     </div>
-    <footer>&copy Groupe4 Flask_Projet P4 Dev_Data SA 2022</footer>
+    <!-- <footer>&copy Groupe4 Flask_Projet P4 Dev_Data SA 2022</footer> -->
 
 </body>
 

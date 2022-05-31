@@ -24,7 +24,8 @@ function CONNEXION(){
     }
     else{
         if ((UTILISATEUR==COMPTE.nom && MOTDEPASSE == COMPTE.passe) || (UTILISATEUR==COMPTE2.nom && MOTDEPASSE == COMPTE2.passe) || (UTILISATEUR==COMPTE3.nom && MOTDEPASSE == COMPTE3.passe)){
-            window.location.href="../templates/affiche_user.html";
+             window.location.href="../templates/affiche_user.html";
+            // window.location.href ="http://127.0.0.1:5000/pagePrincipal"
         }
         else{
             var VALEUR = parseInt(document.getElementById("nombre").value);
