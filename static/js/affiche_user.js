@@ -24,13 +24,13 @@ c.addEventListener("click",(e)=>{
         for( var i=0;i<radio.length;i++){
             radio[i].addEventListener('click',(e)=>{
             var el = document.querySelector(".tr")
-            while(el===el.nextSibling){
-                if(el.tagName==="TR"){
-                   el.classList.remove("selected")
-                }
-            }
+            // while(el===el.nextSibling){
+                // if(el.tagName==="TR"){
+                //    el.classList.remove("selected")
+                // }
+            // }
             g=e.target
-            g.parentElement.parentElement.classList.toggle("selected")
+            // g.parentElement.parentElement.classList.toggle("selected")
             var lesfils=g.parentElement.parentElement
             var listdesfils = lesfils.children
 
@@ -46,6 +46,8 @@ c.addEventListener("click",(e)=>{
                 input2.value=listdesfils[i].innerText
                 listdesfils[i].innerText=""
                 listdesfils[i].append(input2)
+                
+                
         }
             })
         }
@@ -57,7 +59,6 @@ c.addEventListener("click",(e)=>{
             e.target.innerText=""
             e.target.append(input)
             input.addEventListener('blur',()=>{
-                console.log(input.value)
                 e.target.innerText=input.value
                 input.remove() 
             })
