@@ -5,11 +5,15 @@ from database import *
 
 api = Flask(__name__)
 CORS(api)
+<<<<<<< HEAD
 api.config['CORS_HEADERS'] = 'Content-Type'
 
 api.config[
     "SQLALCHEMY_DATABASE_URI"
 ] = "postgresql://postgres:test123@localhost/projetflask"
+=======
+api.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:test123@localhost/projetflask"
+>>>>>>> refs/remotes/origin/main
 api.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 api.config["JSON_SORT_KEYS"] = False
 
