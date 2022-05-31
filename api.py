@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from regex import A
 from database import *
 
 api = Flask(__name__)
@@ -400,6 +401,33 @@ def add_photo(albumid):
 
 ###################################################
 ################# PATCH REQUEST####################
+@api.route(URL+'users/<int:userid>', methods=["PATCH"])
+def update_user(userid):
+    user = Users.query.filter_by(userid=userid, archive=1).first()
+    user_address = Address.query.filter_by(userid=userid, archive=1).first()
+    user_company = Company.query.filter_by(userid=userid, archive=1).first()
+    
+    user.name = request.json['name']
+    user.username = request.json['username']
+    user.email =  request.json['email']
+    user.phone = request.json['website']
+    user.website = request.json['website']
+    
+    user_address.street = request.json['street']
+    user_address.suite = request.json['suite']
+    user_address.city = request.json['city']
+    user_address.zipcode =request.json['zipcode']
+    user_address.geo_lat = request.json['lat']
+    user_address.geo_lng = request.json['lng']
+
+    user_company.companyname = request.json['company_name']
+    user_company.companycatchphrase = request.json['catchphrase']
+    user_company.companybs = request.json['bs']
+    
+    db.session.commit()
+    
+    return jsonify({"update user": "success"})
+
 @api.route(URL + "todos/<int:todoid>", methods=["PATCH"])
 def update_todo(todoid):
     todo = Todo.query.filter_by(todoid=todoid, archive=1).first()
