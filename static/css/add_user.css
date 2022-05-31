@@ -2,10 +2,18 @@
     padding: 0;
     margin: 0;
 }
+/* body{
+    height: 100vh;
+    display: flex;
+    height: 100%;
+    align-items: center;
+} */
 .cadre{
 display: flex;
 flex-direction: column;
+justify-content: center;
 align-items: center;
+/* height: 100%; */
 width: 100%;
 }
 fieldset{
@@ -28,7 +36,6 @@ fieldset{
     padding: 30px;
     border:solid 1px #585aec1c;
     box-shadow: #585AEC;
-
     width: 300px;
 }
 legend{
@@ -38,6 +45,7 @@ legend{
 form{
 display: flex;
 justify-content: center;
+
 flex-wrap: wrap;
 }
 #milieux_bas{
@@ -68,14 +76,14 @@ h2{
     height: 100%;
 }
 
-body>a{
+/* body>a{
     float: left;
     margin: 10px;
 }
 body>a>img{
     width: 40px;
-}
-footer{
+} */
+/* footer{
     width: 100%;
     background-color: #787A7C;
     position: relative;
@@ -86,5 +94,5 @@ footer{
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 20px;
     color: #585aecef;
-}
+} */
 

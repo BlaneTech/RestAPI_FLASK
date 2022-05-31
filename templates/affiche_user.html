@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/affiche_user.css">
+    <script src="../static/js/affiche_user.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>AFFICHE USER</title>
 
     <style>
@@ -38,14 +40,55 @@
             </tbody>
         </table>
 
+        <!-- popup update -->
+
+        <div class="cadre">
+            <em class="fa-solid fa-circle-xmark"></em>
+
+            <form action="" id="form" method="POST">
+                <fieldset id="gauche">
+                    <legend>Donnee Personnel</legend>
+                    <input type="text" name="name" id="name" placeholder="name" required />
+                    <input type="text" name="username" id="username" placeholder="username" required />
+                    <input type="email" name="email" id="email" placeholder="email" required />
+                    <input type="text" name="phone" id="phone" placeholder="phone" required />
+                    <input type="text" name="website" id="website" placeholder="website" required />
+                </fieldset>
+                <div>
+                    <fieldset id="milieux">
+                        <legend>Address</legend>
+                        <input type="text" name="street" id="street" placeholder="street" required />
+                        <input type="text" name="suite" id="suite" placeholder="suite" required />
+                        <input type="text" name="city" id="city" placeholder="city" required />
+                        <input type="text" name="zipcode" id="zipcode" placeholder="zipcode" required />
+                    </fieldset>
+                    <fieldset id="milieux_bas">
+                        <legend>Geo</legend>
+                        <input type="number" step="0.1" name="lat" id="lat" placeholder="latitude" required />
+                        <input type="number" step="0.1" name="lng" id="lng" placeholder="longitude" required />
+                    </fieldset>
+                </div>
+                <fieldset id="droite">
+                    <legend>Company</legend>
+                    <input type="text" name="company_name" id="company_name" placeholder="name" required />
+                    <input type="text" name="catchPhrase" id="catchPhrase" placeholder="catchPhrase" required />
+                    <input type="text" name="bs" id="bs" placeholder="bs" required />
+    
+                </fieldset>
+    
+    
+                <input type="submit" id="submit" value="MODIFIER">
+            </form>
+    
+        </div>
+
     </div>
 
 
 
-    <!-- <footer>&copy Groupe4 Flask_Projet P4 Dev_Data SA 2022</footer> -->
-    <script src="../static/js/affiche_user.js"></script>
+
 </body>
 <!-- <input type="button" value="update">
 <input type="button" value="delete"> -->
-
 </html>
+
