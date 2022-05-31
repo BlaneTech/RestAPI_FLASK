@@ -1,11 +1,11 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, redirect, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from database import *
 
 api = Flask(__name__)
 CORS(api)
-api.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://groupe4:test123@localhost/projetflask"
+api.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:test123@localhost/projetflask"
 api.config['CORS_HEADERS'] = 'Content-Type'
 api.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 api.config["JSON_SORT_KEYS"] = False
@@ -18,7 +18,11 @@ URL = "/groupe4/api/"
 
 @api.route("/")
 def hello():
-    return "<h1> WELCOME IN OUR API</h1>"
+    return render_template('affiche_user.html')
+
+@api.route('/add_user')
+def add_user_page():
+    return redirect('add_user.html')
 
 
 @api.route(URL + "users", methods=["GET"])

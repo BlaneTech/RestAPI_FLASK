@@ -65,7 +65,23 @@ c.addEventListener("click",(e)=>{
     }
 })
 
+let updateBtn = document.querySelectorAll('.update')
+let popup = document.querySelectorAll('.cadre')
+console.log(updateBtn.length)
+updateBtn.addEventListener('click', ()=>{
+    console.log("fall")
+    
+
 })
+
+// -------------UPDATE-------------------
+
+
+
+});
+
+
+
 // window.addEventListener("scroll",()=>{
     // console.log(innerHeight+scrollY, document.documentElement.scrollHeight)
     // if(innerHeight+scrollY+10 >= document.documentElement.scrollHeight){
