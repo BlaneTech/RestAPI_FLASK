@@ -38,6 +38,7 @@ c.addEventListener("click",(e)=>{
             }
             g=e.target
             g.parentElement.parentElement.classList.toggle("selected")
+            
             var lesfils=g.parentElement.parentElement
             var listdesfils = lesfils.children
 
@@ -94,3 +95,26 @@ c.addEventListener("click",(e)=>{
 // })
     // }
 // })
+
+
+// var tr = document.getElementsByClassName('tr')
+// console.log(tr)
+// for (var i = 0; i< tr.length; i++){
+    // var col = tr[i]
+    // console.log(col)
+    // var colore = function(){
+        // this.classList.toggle('red')
+    // }   
+    // package.addEventListener('click', colore)
+// }
+
+var tabTr = document.querySelector('tbody');
+// var tab = tabTr[0].querySelector('tr')
+console.log(tabTr)
+// console.log(tab)
+for (let tr=0; tr<tabTr.length; tr++){
+    tr.addEventListener('click', function(){
+        this.classList.toggle('gris');
+        console.log(tr)
+    });
+}
