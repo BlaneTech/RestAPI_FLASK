@@ -162,7 +162,12 @@ tbody tr:active{
     right:-10px;
     top: -35px;
 }
-
+.id{
+    width: 20%;
+}
+.Id{
+    width: 5%;
+}
 .cadre{
     display: flex;
     flex-direction: column;
