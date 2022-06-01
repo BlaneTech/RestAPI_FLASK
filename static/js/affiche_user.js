@@ -8,11 +8,16 @@ fetch('http://localhost:8000/groupe4/api/users')
     ligne+=`
     <tr class="tr">      
         <td class="radio"><input type="radio" name="select" ></td>
+<<<<<<< HEAD
         <td class="td">${user.userid}</td>
+=======
+        <td class="td">${user.id}</td>
+>>>>>>> refs/remotes/origin/main
         <td class="td">${user.name}</td>
         <td class="td" >${user.email}</td>
         <td class="td" >${user.phone}</td>
-        <td ><input type="button" class="update" value="update"> <input  type="button" class="delete" value="delete"> <input type="button"  class="voir_plus" value="voir plus"> </td>
+
+<td ><input type="button" class="update" value="update"> <input  type="button" class="delete" value="delete"> <input type="button"  class="voir_plus" value="voir plus"> </td>
 
         </tr> 
         `
@@ -32,7 +37,7 @@ c.addEventListener("click",(e)=>{
                 // }
             // }
             g=e.target
-            // g.parentElement.parentElement.classList.toggle("selected")
+            g.parentElement.parentElement
             var lesfils=g.parentElement.parentElement
             var listdesfils = lesfils.children
 
@@ -41,7 +46,7 @@ c.addEventListener("click",(e)=>{
                 element.parentNode.innerText = element.value
                 element.remove()
             }
-            for(let i=1;i<listdesfils.length-1;i++){ 
+            for(let i=2;i<listdesfils.length-1;i++){ 
                 var input2 = document.createElement('input')
                 input2.classList.add("myInput")
                 input2.setAttribute("type","text")
@@ -67,19 +72,37 @@ c.addEventListener("click",(e)=>{
         }) 
     }
 })
-
+// "####################update##############################"
 let updateBtn = document.querySelectorAll('.update')
 let popup = document.querySelectorAll('.cadre')
 console.log(updateBtn.length)
-updateBtn.addEventListener('click', ()=>{
-    console.log("fall")
-    
+updateBtn[0].addEventListener('click', ()=>{
+    console.log("fall")    
+})
+// ########################delete########################
+let deleteBtn = document.querySelectorAll('.delete')
+console.log(deleteBtn.length)
+deleteBtn[0].addEventListener('click', ()=>{
+    console.log("delete")   
+})
+// ############# Voir plus ######################
+let voirPlusBtn = document.querySelectorAll('.voir_plus')
+console.log(deleteBtn.length)
+voirPlusBtn.forEach(btn => {
+    btn.addEventListener('click',(e)=>{
+        const id = parseInt(e.target.parentNode.parentNode.children[1].innerText);
+
+        console.log(id);
+        console.log("voir plus")
+        fetch('http://localhost:8000/groupe4/api/users/1')
+        .then(rep=>rep.json())
+        .then(rep=>{rep.forEach(user=> {
+            console.log(user)
+        })
+         })
+    })
 
 })
-
-// -------------UPDATE-------------------
-
-
 
 });
 
@@ -108,3 +131,24 @@ updateBtn.addEventListener('click', ()=>{
 // })
 
 
+// var tr = document.getElementsByClassName('tr')
+// console.log(tr)
+// for (var i = 0; i< tr.length; i++){
+    // var col = tr[i]
+    // console.log(col)
+    // var colore = function(){
+        // this.classList.toggle('red')
+    // }   
+    // package.addEventListener('click', colore)
+// }
+
+var tabTr = document.querySelector('tbody');
+// var tab = tabTr[0].querySelector('tr')
+console.log(tabTr)
+// console.log(tab)
+for (let tr=0; tr<tabTr.length; tr++){
+    tr.addEventListener('click', function(){
+        this.classList.toggle('gris');
+        console.log(tr)
+    });
+}

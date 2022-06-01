@@ -146,6 +146,13 @@ input[type="radio"]{
     width: 20px
 }
 
+
+tbody tr:hover{
+background-color: #787a7c2f;
+}
+tbody tr:active{
+    background-color: rgba(106, 102, 102, 0.377);
+}
 /* POPUP UPDATE */
 
 .fa-solid{
@@ -232,3 +239,7 @@ legend{
     #droite , #gauche{
         height: 100%;
     }
+
+.selected{
+    background-color: red;
+}
