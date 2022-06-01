@@ -1,4 +1,3 @@
-
 let ligne=""
 const listUser = document.querySelector(".listUsers")
 fetch('http://localhost:8000/groupe4/api/users')
@@ -67,13 +66,10 @@ c.addEventListener("click",(e)=>{
             })
         }) 
     }
+    popupUpdate()
 })
 // "####################update##############################"
-let updateBtn = document.querySelectorAll('.update')
-let popup = document.querySelectorAll('.cadre')
-console.log(updateBtn.length)
-updateBtn[0].addEventListener('click', ()=>{
-    console.log("fall")    
+    
 })
 // ########################delete########################
 var table = document.querySelector('tbody')
@@ -83,20 +79,14 @@ for (i=0; i<deleteBtn.length; i++){
     deleteBtn[i].addEventListener('click',(e)=>{
         console.log('delete')
         var deleteId = parseInt(e.target.parentNode.parentNode.children[1].innerText)
-        console.log(deleteId) 
-
-
         fetch(`http://localhost:8000/groupe4/api/users/${deleteId}`,{
-
             method:'DELETE',
             headers: {
               'Content-Type':'application/json',
             }
-            
             })
-        
-    
     })
+
 }
 // console.log(deleteBtn.length)
 // ############# Voir plus ######################
@@ -111,51 +101,20 @@ voirPlusBtn.forEach(btn => {
 
 })
 
-});
-
-
-
-// window.addEventListener("scroll",()=>{
-    // console.log(innerHeight+scrollY, document.documentElement.scrollHeight)
-    // if(innerHeight+scrollY+10 >= document.documentElement.scrollHeight){
-        // console.log("bonjour")
-        // fetch('http://localhost:8000/groupe4/api/users')
-        // .then(rep=>rep.json())
-        // .then(rep=>{rep.forEach(user=> {
-    // ligne+=`
-    // <tr class="tr">      
-        // <td> <input type="radio" name="select" ></td>
-        // <td class="td">${user.name}</td>
-        // <td class="td" >${user.email}</td>
-        // <td class="td" >${user.phone}</td>
-        // <td ><input type="button" value="update"> <input type="button" value="delete"> <input type="button" value="voir plus"> </td>
-        // </tr> 
-        // `
 // });
-//  listUser.innerHTML=ligne;   
-// })
-    // }
-// })
-
-
-// var tr = document.getElementsByClassName('tr')
-// console.log(tr)
-// for (var i = 0; i< tr.length; i++){
-    // var col = tr[i]
-    // console.log(col)
-    // var colore = function(){
-        // this.classList.toggle('red')
-    // }   
-    // package.addEventListener('click', colore)
-// }
-
-var tabTr = document.querySelector('tbody');
-// var tab = tabTr[0].querySelector('tr')
-console.log(tabTr)
-// console.log(tab)
-for (let tr=0; tr<tabTr.length; tr++){
-    tr.addEventListener('click', function(){
-        this.classList.toggle('gris');
-        // console.log(tr)
+// #################UPDATE##################
+function popupUpdate() {
+  let updateBtn = document.querySelectorAll(".update");
+  let popup = document.querySelector(".cadre");
+  let closeBtn = document.querySelector('em')
+  for (btn of updateBtn) {
+    btn.addEventListener("click", (e) => {
+      popup.style.display = "block";
+      console.log(popup.style.display);
     });
+  }
+  closeBtn.addEventListener('click', ()=>{
+    popup.style.display = "none";
+
+  })
 }
