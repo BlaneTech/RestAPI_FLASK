@@ -10,9 +10,6 @@ api.config['CORS_HEADERS'] = 'Content-Type'
 api.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 api.config["JSON_SORT_KEYS"] = False
 
-# company = Company.query.filter_by(userid=1 ,companybs='weuth').all()
-# print(company ,"hahaha")
-
 URL = "/groupe4/api/"
 
 
@@ -273,7 +270,7 @@ def get_userid_albums(userid):
 ###############################"#########
 
 
-def gestionId(table_name, col_name):
+def gestion_id(table_name, col_name):
     list_id = set()
     ids = table_name.query.with_entities(col_name).all()
     for id in ids:
@@ -303,9 +300,9 @@ def add_user():
     catchPhrase = request.json["catchPhrase"]
     bs = request.json["bs"]
 
-    userid = gestionId(Users, Users.userid)
-    addressid = gestionId(Address, Address.addressid)
-    companyid = gestionId(Company, Company.companyid)
+    userid = gestion_id(Users, Users.userid)
+    addressid = gestion_id(Address, Address.addressid)
+    companyid = gestion_id(Company, Company.companyid)
     new_user = Users(
         userid=userid,
         name=name,
@@ -347,7 +344,7 @@ def add_user():
 def add_album(userid):
     userid = request.json["userid"]
     albumtitle = request.json["albumtitle"]
-    albumid = gestionId(Albums, Albums.albumid)
+    albumid = gestion_id(Albums, Albums.albumid)
     new_album = Albums(albumid=albumid, userid=userid, albumtitle=albumtitle)
     db.session.add(new_album)
     db.session.commit()
@@ -356,10 +353,10 @@ def add_album(userid):
 
 @api.route(URL + "users/<int:userid>/todo", methods=["POST"])
 def add_todo(userid):
-    userid = request.json["userid"]
+    # userid = request.json["userid"]
     todotitle = request.json["todotitle"]
     todoetat = request.json["todoetat"]
-    todoid = gestionId(Todo, Todo.todoid)
+    todoid = gestion_id(Todo, Todo.todoid)
     new_todo = Todo(
         todoid=todoid, userid=userid, todotitle=todotitle, todoetat=todoetat
     )
@@ -370,10 +367,9 @@ def add_todo(userid):
 
 @api.route(URL + "users/<int:userid>/posts", methods=["POST"])
 def add_post(userid):
-    # userid=request.json['userid']
     posttitle = request.json["posttitle"]
     postbody = request.json["postbody"]
-    postid = gestionId(Posts, Posts.postid)
+    postid = gestion_id(Posts, Posts.postid)
     new_post = Posts(
         postid=postid, userid=userid, posttitle=posttitle, postbody=postbody
     )
@@ -384,11 +380,11 @@ def add_post(userid):
 
 @api.route(URL + "albums/<int:albumid>/photos", methods=["POST"])
 def add_photo(albumid):
-    albumid = request.json["albumid"]
+    # albumid = request.json["albumid"]
     phototitle = request.json["phototitle"]
     photourl = request.json["photourl"]
     photothumbnailurl = request.json["photothumbnailurl"]
-    photoid = gestionId(Photos, Photos.photoid)
+    photoid = gestion_id(Photos, Photos.photoid)
     new_photo = Photos(
         photoid=photoid,
         albumid=albumid,
@@ -409,22 +405,22 @@ def update_user(userid):
     user_address = Address.query.filter_by(userid=userid, archive=1).first()
     user_company = Company.query.filter_by(userid=userid, archive=1).first()
     
-    user.name = request.json['name']
-    user.username = request.json['username']
-    user.email =  request.json['email']
-    user.phone = request.json['website']
-    user.website = request.json['website']
+    user.name = request.json['name'] if 'name' in request.json else user.name
+    user.username = request.json['username'] if 'username' in request.json else user.username
+    user.email =  request.json['email'] if 'email' in request.json else user.email
+    user.phone = request.json['website'] if 'phone' in request.json else user.phone
+    user.website = request.json['website'] if 'website' in request.json else user.website
     
-    user_address.street = request.json['street']
-    user_address.suite = request.json['suite']
-    user_address.city = request.json['city']
-    user_address.zipcode =request.json['zipcode']
-    user_address.geo_lat = request.json['lat']
-    user_address.geo_lng = request.json['lng']
+    user_address.street = request.json['street'] if 'street' in request.json else user_address.street
+    user_address.suite = request.json['suite'] if 'suite' in request.json else user_address.suite
+    user_address.city = request.json['city'] if 'city' in request.json else user_address.city
+    user_address.zipcode =request.json['zipcode'] if 'zipcode' in request.json else user_address.zipcode
+    user_address.geo_lat = request.json['lat'] if 'lat' in request.json else user_address.geo_lat
+    user_address.geo_lng = request.json['lng'] if 'lng' in request.json else user_address.geo_lng
 
-    user_company.companyname = request.json['company_name']
-    user_company.companycatchphrase = request.json['catchphrase']
-    user_company.companybs = request.json['bs']
+    user_company.companyname = request.json['company_name'] if 'company_name' in request.json else user_company.companyname
+    user_company.companycatchphrase = request.json['catchphrase'] if 'catchphrase' in request.json else user_company.companycatchphrase
+    user_company.companybs = request.json['bs'] if 'bs' in request.json else user_company.companybs
     
     db.session.commit()
     
@@ -460,10 +456,10 @@ def update_comment(commentid):
 
 
 @api.route(URL + "albums/<int:albumid>", methods=["PATCH"])
-def updateAlbums(albumid):
-    update_Album = Albums.query.filter_by(albumid=albumid, archive=1).first()
+def update_albums(albumid):
+    update_album = Albums.query.filter_by(albumid=albumid, archive=1).first()
     albumtitle = request.json["albumtitle"]
-    update_Album.albumtitle = albumtitle
+    update_album.albumtitle = albumtitle
     db.session.commit()
     return "ok"
 
@@ -487,7 +483,6 @@ status = 0
 def archive_one_album(albumid):
     archive_album = Albums.query.filter_by(albumid=albumid, archive=1).first()
     archive_photos_album = Photos.query.filter_by(albumid=albumid, archive=1).all()
-    # status = request.json['status']
 
     for photo in archive_photos_album:
         photo.archive = status
@@ -499,7 +494,6 @@ def archive_one_album(albumid):
 @api.route(URL + "todos/<int:todoid>", methods=["DELETE"])
 def archive_one_todo(todoid):
     archive_todo = Todo.query.filter_by(todoid=todoid, archive=1).first()
-    # status = request.json['status']
     archive_todo.archive = status
     db.session.commit()
     return "Suppression valider"
@@ -508,7 +502,6 @@ def archive_one_todo(todoid):
 @api.route(URL + "comments/<int:commentid>", methods=["DELETE"])
 def archive_one_comment(commentid):
     archive_comment = Comment.query.filter_by(commentid=commentid, archive=1).first()
-    # status = request.json['status']
     archive_comment.archive = status
     db.session.commit()
     return "commentaire supprimer"
@@ -517,7 +510,6 @@ def archive_one_comment(commentid):
 @api.route(URL + "posts/<int:postid>", methods=["DELETE"])
 def archive_one_post(postid):
     archive_post = Posts.query.filter_by(postid=postid, archive=1).first()
-    # status = request.json['status']
     archive_post.archive = status
     db.session.commit()
     return "post supprimer"
@@ -537,7 +529,6 @@ def archive_all_photos():
 def archive_all_posts():
     all_posts = Posts.query.filter_by(archive=1).all()
     all_comment = Comment.query.filter_by(archive=1).all()
-    # status = request.json['status']
     for comment in all_comment:
         comment.archive = status
     for post in all_posts:
@@ -550,7 +541,6 @@ def archive_all_posts():
 def archive_all_albums_user(userid):
     one_user = Users.query.filter_by(userid=userid, archive=1).first()
     all__albums = Albums.query.filter_by(userid=one_user.userid, archive=1).all()
-    # status = request.json['status']
     for albums in all__albums:
         all_photos = Photos.query.filter_by(albumid=albums.albumid, archive=1).all()
         for photo in all_photos:
@@ -564,7 +554,6 @@ def archive_all_albums_user(userid):
 def archive_all_todos_user(userid):
     one_user = Users.query.filter_by(userid=userid, archive=1).first()
     all__todos = Todo.query.filter_by(userid=one_user.userid, archive=1).all()
-    # status = request.json['status']
     for todo in all__todos:
         todo.archive = status
     db.session.commit()
@@ -592,7 +581,6 @@ def archive_all_photos_in_a_album(albumid):
 @api.route(URL + "albums", methods=["DELETE"])
 def archive_all_albums():
     all_albums = Albums.query.filter_by(archive=1).all()
-    # status = all_albums['status']
     for album in all_albums:
         album.archive = status
     db.session.commit()
@@ -602,7 +590,6 @@ def archive_all_albums():
 @api.route(URL + "photos/<int:photoid>", methods=["DELETE"])
 def archive_one_photo(photoid):
     archive_photo = Photos.query.filter_by(photoid=photoid, archive=1).first()
-    # status = request.json['status']
     archive_photo.archive = status
     db.session.commit()
     return "photo archivée"
@@ -611,18 +598,37 @@ def archive_one_photo(photoid):
 @api.route(URL + "users/<int:userid>/posts", methods=["DELETE"])
 def archive_all_post_user(userid):
     archive_all_post = Posts.query.filter_by(userid=userid, archive=1).all()
-    archive_all_post.archive = 0
+    archive_all_post.archive = status
     db.session.commit()
     return "all posts are succesfully archived"
 
 
-# @api.route(URL+'users/<int:userid>')
-# def archive_a_user(userid):
-#     user = Users.query.filter_by(userid=userid, archive=1).first()
-#     user_address = Address.querry.filter_by(userid=userid, archive=1).first()
-#     user_company = Company.query.filter_by(userid=1, archive=1).first()
-#     all_user_posts= Posts.query.filter_by(userid=userid, archive=1).all()
-#     all_user_comment = Comment.query.filter_by(userid=userid, archive=1).all()
+@api.route(URL+'users/<int:userid>', methods=['DELETE'])
+def archive_a_user(userid):
+    user = Users.query.filter_by(userid=userid, archive=1).first()
+    user.archive = status
+    user_address = Address.query.filter_by(userid=userid, archive=1).first()
+    user_address.archive = status
+    user_company = Company.query.filter_by(userid=userid, archive=1).first()
+    user_company.archive = status
+    all_user_posts= Posts.query.filter_by(userid=userid, archive=1).all()
+    for post in all_user_posts:
+        post.archive = status
+        all_user_comment = Comment.query.filter_by(postid=post.postid, archive=1).all()
+        for comment in all_user_comment:
+            comment.archive = status
+    all_user_todos = Todo.query.filter_by(userid=userid, archive=1).all()
+    for todo in all_user_todos:
+        todo.archive = status
+    all_user_albums = Albums.query.filter_by(userid=userid).all()
+    for album in all_user_albums:
+        album.archive = status
+        all_user_photos = Photos.query.filter_by(albumid = album.albumid, archive=1).all()
+        for photo in all_user_photos:
+            photo.archive = status
+    
+    db.session.commit()
+    return jsonify({"delete_user": "success"})        
 
 
 db.init_app(api)
