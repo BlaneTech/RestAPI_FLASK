@@ -7,10 +7,12 @@ fetch('http://localhost:8000/groupe4/api/users')
     ligne+=`
     <tr class="tr">      
         <td class="radio"><input type="radio" name="select" ></td>
+        <td class="td">${user.id}</td>
         <td class="td">${user.name}</td>
         <td class="td" >${user.email}</td>
         <td class="td" >${user.phone}</td>
-        <td ><input type="button" class="update" value="update"> <input  type="button" class="delete" value="delete"> <input type="button"  class="voir_plus" value="voir plus"> </td>
+
+<td ><input type="button" class="update" value="update"> <input  type="button" class="delete" value="delete"> <input type="button"  class="voir_plus" value="voir plus"> </td>
 
         </tr> 
         `
@@ -39,7 +41,7 @@ c.addEventListener("click",(e)=>{
                 element.parentNode.innerText = element.value
                 element.remove()
             }
-            for(let i=1;i<listdesfils.length-1;i++){ 
+            for(let i=2;i<listdesfils.length-1;i++){ 
                 var input2 = document.createElement('input')
                 input2.classList.add("myInput")
                 input2.setAttribute("type","text")
@@ -88,12 +90,22 @@ for (i=0; i<deleteBtn.length; i++){
 // console.log(deleteBtn.length)
 // ############# Voir plus ######################
 let voirPlusBtn = document.querySelectorAll('.voir_plus')
-// console.log(deleteBtn.length)
-voirPlusBtn[0].addEventListener('click', ()=>{
-    // console.log("voir_plus")  
+console.log(deleteBtn.length)
+voirPlusBtn.forEach(btn => {
+    btn.addEventListener('click',(e)=>{
+        const id = parseInt(e.target.parentNode.parentNode.children[1].innerText);
+
+        console.log(id);
+        console.log("voir plus")
+        fetch('http://localhost:8000/groupe4/api/users/1')
+        .then(rep=>rep.json())
+        .then(rep=>{rep.forEach(user=> {
+            console.log(user)
+        })
+         })
+    })
+
 })
-
-
 
 });
 
