@@ -8,11 +8,7 @@ fetch('http://localhost:8000/groupe4/api/users')
     ligne+=`
     <tr class="tr">      
         <td class="radio"><input type="radio" name="select" ></td>
-<<<<<<< HEAD
-        <td class="td">${user.userid}</td>
-=======
         <td class="td">${user.id}</td>
->>>>>>> refs/remotes/origin/main
         <td class="td">${user.name}</td>
         <td class="td" >${user.email}</td>
         <td class="td" >${user.phone}</td>
@@ -90,11 +86,13 @@ for (i=0; i<deleteBtn.length; i++){
         console.log(deleteId) 
 
 
-        fetch(`http://localhost:8000/groupe4/api/users${id}`,{
+        fetch(`http://localhost:8000/groupe4/api/users/${deleteId}`,{
+
             method:'DELETE',
             headers: {
               'Content-Type':'application/json',
             }
+            
             })
         
     
