@@ -1,6 +1,6 @@
 
 function CONNEXION(){
-    var COMPTE =[{
+    var COMPTE ={
         nom: "dabakh",
         passe:"deme",
 
@@ -9,7 +9,7 @@ function CONNEXION(){
 
         nom: "blantech",
         passe: "diaw"}
-    ]
+    
 
    console.log(COMPTE)
     
