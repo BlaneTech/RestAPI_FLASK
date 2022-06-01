@@ -71,11 +71,23 @@ fetch("http://localhost:8000/groupe4/api/users")
     popupUpdate();
   });
 // ########################delete########################
-let deleteBtn = document.querySelectorAll(".delete");
-console.log(deleteBtn.length);
-deleteBtn[0].addEventListener("click", () => {
-  console.log("delete");
-});
+var table = document.querySelector('tbody')
+let ligneSupp= document.querySelectorAll('tr')
+let deleteBtn = document.querySelectorAll('.delete')
+for (i=0; i<deleteBtn.length; i++){
+    deleteBtn[i].addEventListener('click',(e)=>{
+        console.log('delete')
+        var deleteId = parseInt(e.target.parentNode.parentNode.children[1].innerText)
+        fetch(`http://localhost:8000/groupe4/api/users/${deleteId}`,{
+            method:'DELETE',
+            headers: {
+              'Content-Type':'application/json',
+            }
+            })
+    })
+
+}
+// console.log(deleteBtn.length)
 // ############# Voir plus ######################
 let voirPlusBtn = document.querySelectorAll(".voir_plus");
 console.log(deleteBtn.length);
