@@ -73,16 +73,24 @@ updateBtn[0].addEventListener('click', ()=>{
     console.log("fall")    
 })
 // ########################delete########################
+var table = document.querySelector('tbody')
+let ligneSupp= document.querySelectorAll('tr')
 let deleteBtn = document.querySelectorAll('.delete')
-console.log(deleteBtn.length)
-deleteBtn[0].addEventListener('click', ()=>{
-    console.log("delete")   
-})
+for (i=0; i<deleteBtn.length; i++){
+    deleteBtn[i].addEventListener('click',(e)=>{
+        console.log('delete')
+        var deleteId = parseInt(e.target.parentNode.parentNode.children[1].innerText)
+        console.log(deleteId) 
+        
+    
+    })
+}
+// console.log(deleteBtn.length)
 // ############# Voir plus ######################
 let voirPlusBtn = document.querySelectorAll('.voir_plus')
-console.log(deleteBtn.length)
+// console.log(deleteBtn.length)
 voirPlusBtn[0].addEventListener('click', ()=>{
-    console.log("voir_plus")  
+    // console.log("voir_plus")  
 })
 
 
@@ -132,6 +140,6 @@ console.log(tabTr)
 for (let tr=0; tr<tabTr.length; tr++){
     tr.addEventListener('click', function(){
         this.classList.toggle('gris');
-        console.log(tr)
+        // console.log(tr)
     });
 }
