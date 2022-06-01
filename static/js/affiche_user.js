@@ -288,7 +288,7 @@ function popupUpdate() {
   for (btn of updateBtn) {
     btn.addEventListener("click", (e) => {
       popup.style.display = "block";
-      console.log(popup.style.display);
+      // console.log(popup.style.display);
     });
   }
   closeBtn.addEventListener('click', ()=>{
