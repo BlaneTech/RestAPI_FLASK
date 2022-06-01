@@ -86,15 +86,8 @@ console.log(deleteBtn.length)
 voirPlusBtn.forEach(btn => {
     btn.addEventListener('click',(e)=>{
         const id = parseInt(e.target.parentNode.parentNode.children[1].innerText);
-
-        console.log(id);
-        console.log("voir plus")
-        fetch('http://localhost:8000/groupe4/api/users/1')
-        .then(rep=>rep.json())
-        .then(rep=>{rep.forEach(user=> {
-            console.log(user)
-        })
-         })
+        localStorage.setItem('id',`${id}`)
+        window.location.href="../templates/user.html"
     })
 
 })
