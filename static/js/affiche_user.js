@@ -83,6 +83,14 @@ for (i=0; i<deleteBtn.length; i++){
         console.log('delete')
         var deleteId = parseInt(e.target.parentNode.parentNode.children[1].innerText)
         console.log(deleteId) 
+
+
+        fetch(`http://localhost:8000/groupe4/api/users${id}`,{
+            method:'DELETE',
+            headers: {
+              'Content-Type':'application/json',
+            }
+            })
         
     
     })
@@ -99,9 +107,7 @@ voirPlusBtn.forEach(btn => {
         console.log("voir plus")
         fetch('http://localhost:8000/groupe4/api/users/1')
         .then(rep=>rep.json())
-        .then(rep=>{rep.forEach(user=> {
-            console.log(user)
-        })
+        .then(rep=>{console.log(rep)
          })
     })
 
