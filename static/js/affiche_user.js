@@ -2,7 +2,6 @@ let ligne=""
 const listUser = document.querySelector(".listUsers")
 fetch('http://localhost:8000/groupe4/api/users')
 .then(rep=>rep.json())
-    // console.log(rep)
 .then(rep=>{rep.forEach(user=> {
     ligne+=`
     <tr class="tr">      
@@ -26,11 +25,6 @@ c.addEventListener("click",(e)=>{
         for( var i=0;i<radio.length;i++){
             radio[i].addEventListener('click',(e)=>{
             var el = document.querySelector(".tr")
-            // while(el===el.nextSibling){
-                // if(el.tagName==="TR"){
-                //    el.classList.remove("selected")
-                // }
-            // }
             g=e.target
             g.parentElement.parentElement
             var lesfils=g.parentElement.parentElement
@@ -47,9 +41,7 @@ c.addEventListener("click",(e)=>{
                 input2.setAttribute("type","text")
                 input2.value=listdesfils[i].innerText
                 listdesfils[i].innerText=""
-                listdesfils[i].append(input2)
-                
-                
+                listdesfils[i].append(input2)        
         }
             })
         }
@@ -67,11 +59,9 @@ c.addEventListener("click",(e)=>{
         }) 
     }
     popupUpdate()
+
 })
-// "####################update##############################"
-    
-})
-// ########################delete########################
+  // ########################delete########################
 var table = document.querySelector('tbody')
 let ligneSupp= document.querySelectorAll('tr')
 let deleteBtn = document.querySelectorAll('.delete')
@@ -91,7 +81,7 @@ for (i=0; i<deleteBtn.length; i++){
 // console.log(deleteBtn.length)
 // ############# Voir plus ######################
 let voirPlusBtn = document.querySelectorAll('.voir_plus')
-console.log(deleteBtn.length)
+console.log(voirPlusBtn.length)
 voirPlusBtn.forEach(btn => {
     btn.addEventListener('click',(e)=>{
         const id = parseInt(e.target.parentNode.parentNode.children[1].innerText);
@@ -99,6 +89,8 @@ voirPlusBtn.forEach(btn => {
         window.location.href="../templates/user.html"
     })
 
+})
+  
 })
 
 // });
