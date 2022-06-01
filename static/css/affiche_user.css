@@ -232,3 +232,7 @@ legend{
     #droite , #gauche{
         height: 100%;
     }
+
+.selected{
+    background-color: red;
+}
