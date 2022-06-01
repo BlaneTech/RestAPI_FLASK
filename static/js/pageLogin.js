@@ -1,18 +1,17 @@
 
 function CONNEXION(){
-    var COMPTE ={
+    var COMPTE =[{
         nom: "dabakh",
         passe:"deme",
-    }
 
-    var  COMPTE2 ={
         nom: "weuthie",
-        passe:"diop"
-    }
-    var COMPTE3 ={
+        passe:"diop",
+
         nom: "blantech",
-        passe: "diaw"
-    }
+        passe: "diaw"}
+    ]
+
+   console.log(COMPTE)
     
     var UTILISATEUR = document.getElementById("utilisateur").value.toString().trim();
     var MOTDEPASSE = document.getElementById("motdepasse").value.toString().trim();
