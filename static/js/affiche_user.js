@@ -1,5 +1,3 @@
-
-
 let ligne=""
 const listUser = document.querySelector(".listUsers")
 fetch('http://localhost:8000/groupe4/api/users')
@@ -14,7 +12,7 @@ fetch('http://localhost:8000/groupe4/api/users')
         <td class="td" >${user.email}</td>
         <td class="td" >${user.phone}</td>
 
-<td ><input type="button" class="update" value="update"> <input  type="button" class="delete" onclick="location.relod()" value="delete"> <input type="button"  class="voir_plus" value="voir plus"> </td>
+<td ><input type="button" class="update" value="update"> <input  type="button" class="delete" value="delete"> <input type="button"  class="voir_plus" value="voir plus"> </td>
 
         </tr> 
         `
@@ -68,13 +66,10 @@ c.addEventListener("click",(e)=>{
             })
         }) 
     }
+    popupUpdate()
 })
 // "####################update##############################"
-let updateBtn = document.querySelectorAll('.update')
-let popup = document.querySelectorAll('.cadre')
-console.log(updateBtn.length)
-updateBtn[0].addEventListener('click', ()=>{
-    console.log("fall")    
+    
 })
 // ########################delete########################
 var table = document.querySelector('tbody')
@@ -90,7 +85,6 @@ for (i=0; i<deleteBtn.length; i++){
               'Content-Type':'application/json',
             }
             })
-          window.location.reload()
     })
 
 }
@@ -107,7 +101,20 @@ voirPlusBtn.forEach(btn => {
 
 })
 
-});
+// });
+// #################UPDATE##################
+function popupUpdate() {
+  let updateBtn = document.querySelectorAll(".update");
+  let popup = document.querySelector(".cadre");
+  let closeBtn = document.querySelector('em')
+  for (btn of updateBtn) {
+    btn.addEventListener("click", (e) => {
+      popup.style.display = "block";
+      console.log(popup.style.display);
+    });
+  }
+  closeBtn.addEventListener('click', ()=>{
+    popup.style.display = "none";
 
-
-
+  })
+}
