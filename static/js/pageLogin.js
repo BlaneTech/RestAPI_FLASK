@@ -2,7 +2,7 @@
 function CONNEXION(){
     var COMPTE ={
         nom: "dabakh",
-        passe:"deme",
+        passe:"deme"
     }
 
     var  COMPTE2 ={

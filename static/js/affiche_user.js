@@ -83,20 +83,14 @@ for (i=0; i<deleteBtn.length; i++){
     deleteBtn[i].addEventListener('click',(e)=>{
         console.log('delete')
         var deleteId = parseInt(e.target.parentNode.parentNode.children[1].innerText)
-        console.log(deleteId) 
-
-
         fetch(`http://localhost:8000/groupe4/api/users/${deleteId}`,{
-
             method:'DELETE',
             headers: {
               'Content-Type':'application/json',
             }
-            
             })
-        
-    
     })
+
 }
 // console.log(deleteBtn.length)
 // ############# Voir plus ######################
