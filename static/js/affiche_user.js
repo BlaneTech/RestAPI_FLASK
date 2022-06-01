@@ -30,9 +30,7 @@ c.addEventListener("click",(e)=>{
                 // }
             // }
             g=e.target
-            g.parentElement.parentElement.classList.toggle("selected")
-            
-            // g.parentElement.parentElement.classList.toggle("selected")
+            g.parentElement.parentElement
             var lesfils=g.parentElement.parentElement
             var listdesfils = lesfils.children
 
@@ -67,17 +65,25 @@ c.addEventListener("click",(e)=>{
         }) 
     }
 })
-
+// "####################update##############################"
 let updateBtn = document.querySelectorAll('.update')
 let popup = document.querySelectorAll('.cadre')
 console.log(updateBtn.length)
-updateBtn.addEventListener('click', ()=>{
-    console.log("fall")
-    
-
+updateBtn[0].addEventListener('click', ()=>{
+    console.log("fall")    
 })
-
-// -------------UPDATE-------------------
+// ########################delete########################
+let deleteBtn = document.querySelectorAll('.delete')
+console.log(deleteBtn.length)
+deleteBtn[0].addEventListener('click', ()=>{
+    console.log("delete")   
+})
+// ############# Voir plus ######################
+let voirPlusBtn = document.querySelectorAll('.voir_plus')
+console.log(deleteBtn.length)
+voirPlusBtn[0].addEventListener('click', ()=>{
+    console.log("voir_plus")  
+})
 
 
 
