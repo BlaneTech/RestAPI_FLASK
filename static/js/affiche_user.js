@@ -13,7 +13,7 @@ fetch("http://localhost:8000/groupe4/api/users")
         <td class="td" >${user.email}</td>
         <td class="td" >${user.phone}</td>
         <td >
-            <input type="button" class="update"  value="update"> 
+            <input type="button" class="update" value="update"> 
             <input  type="button" class="delete" value="delete"> 
             <input type="button"  class="voir_plus" value="voir plus"> 
         </td>
