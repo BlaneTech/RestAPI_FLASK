@@ -75,7 +75,7 @@ updateBtn[0].addEventListener('click', ()=>{
 // ########################delete########################
 let deleteBtn = document.querySelectorAll('.delete')
 console.log(deleteBtn.length)
-deleteBtn[0].addEventListener('click', ()=>{
+deleteBtn[i].addEventListener('click', ()=>{
     console.log("delete")   
 })
 // ############# Voir plus ######################
