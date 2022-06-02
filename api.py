@@ -5,7 +5,7 @@ from database import *
 
 api = Flask(__name__)
 CORS(api)
-api.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://groupe4:test123@localhost/projetflask"
+api.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:test123@localhost/projetflask"
 api.config['CORS_HEADERS'] = 'Content-Type'
 api.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 api.config["JSON_SORT_KEYS"] = False
@@ -25,9 +25,9 @@ def add_user_page():
 @api.route(URL + "users", methods=["GET"])
 def get_all_users():
     all_users = []
-    users = Users.query.filter_by(archive=1).all()
-    address = Address.query.all()
-    company = Company.query.all()
+    users = Users.query.filter_by(archive=1).order_by(Users.userid.desc()).all()
+    address = Address.query.filter_by(archive=1).order_by(Address.addressid.desc()).all()
+    company = Company.query.filter_by(archive=1).order_by(Company.companyid.desc()).all()
     for k in range(len(users)):
         user_results = {
             "id": users[k].userid,

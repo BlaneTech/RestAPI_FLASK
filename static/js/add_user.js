@@ -1,6 +1,6 @@
-let form =  document.getElementById("form")
+let form = document.getElementById("form")
 let url = 'http://localhost:8000/groupe4/api/user'
-// let nam = document.getElementById("name")
+    // let nam = document.getElementById("name")
 
 form.addEventListener('submit', function(e) {
     e.preventDefault()
@@ -8,17 +8,17 @@ form.addEventListener('submit', function(e) {
     let nam = document.getElementById("name").value
     let username = document.getElementById("name").value
     let email = document.getElementById("email").value
-    let  phone = document.getElementById("phone").value
+    let phone = document.getElementById("phone").value
     let website = document.getElementById("website").value
-    // address data
-    let street =  document.getElementById("street").value
+        // address data
+    let street = document.getElementById("street").value
     let suite = document.getElementById("city").value
-    let city =  document.getElementById("city").value
+    let city = document.getElementById("city").value
     let zipcode = document.getElementById("zipcode").value
-    // geo data
-    let lat =  document.getElementById("lat").value
-    let lng =  document.getElementById("lng").value
-    // company data
+        // geo data
+    let lat = document.getElementById("lat").value
+    let lng = document.getElementById("lng").value
+        // company data
     let company_name = document.getElementById("company_name").value
     let catchPhrase = document.getElementById("catchPhrase").value
     let bs = document.getElementById("bs").value
@@ -29,14 +29,14 @@ form.addEventListener('submit', function(e) {
         email: email,
         phone: phone,
         website: website,
-    
+
         street: street,
         suite: suite,
         city: city,
         zipcode: zipcode,
         lat: lat,
         lng: lng,
-    
+
         company_name: company_name,
         catchPhrase: catchPhrase,
         bs: bs
@@ -44,18 +44,20 @@ form.addEventListener('submit', function(e) {
     let options = {
         method: 'POST',
         body: JSON.stringify(data),
-        headers : {
+        headers: {
             "Content-type": "application/json; charset=UTF-8 ",
             Accept: "application/json"
         }
     }
     fetch(url, options)
-    .then(function(response){
-        return response.json()
-    })
-    .then(function(data){
-        console.log(data)
-    })
+        .then(function(response) {
+            return response.json()
+        })
+        // .then(function(data) {
+        // console.log(data)
+        // })
+
+    window.location.href = '../templates/affiche_user.html'
 });
 
 

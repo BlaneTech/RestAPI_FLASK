@@ -2,11 +2,10 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 api = Flask(__name__)
-api.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://groupe4:test123@localhost/projetflask"
+api.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:test123@localhost/projetflask"
 api.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 
 db = SQLAlchemy(api)
-
 
 class Users(db.Model):
     userid = db.Column(db.Integer(), primary_key=True)
