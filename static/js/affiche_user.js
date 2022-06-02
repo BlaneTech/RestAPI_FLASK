@@ -14,8 +14,7 @@ fetch("http://localhost:8000/groupe4/api/users")
 
 <td ><input type="button" class="update" value="update"> <input  type="button" class="delete" value="delete"> <input type="button"  class="voir_plus" value="voir plus"> </td>
 
-        </tr> 
-        `;
+        </tr>`;
         });
         listUser.innerHTML = ligne;
         let c = document.querySelector("tbody");
@@ -96,6 +95,24 @@ fetch("http://localhost:8000/groupe4/api/users")
 
 // });
 // #################UPDATE##################
+
+var id = parseInt(localStorage.getItem("id"));
+const nom = document.querySelector("#name");
+const username = document.querySelector("#username");
+const email = document.querySelector("#email");
+const phone = document.querySelector("#phone");
+const website = document.querySelector("#website");
+const street = document.querySelector("#street");
+const suite = document.querySelector("#suite");
+const city = document.querySelector("#city");
+const zipcode = document.querySelector("#zipcode");
+const lat = document.querySelector("#lat");
+const lng = document.querySelector("#lng");
+const NAME = document.querySelector("#company_name");
+const catchPhrase = document.querySelector("#catchPhrase");
+const bs = document.querySelector("#bs");
+let modifieBtn = document.querySelector("#submit");
+
 function popupUpdate() {
     let updateBtn = document.querySelectorAll(".update");
     let popup = document.querySelector(".cadre");
@@ -103,7 +120,59 @@ function popupUpdate() {
     for (btn of updateBtn) {
         btn.addEventListener("click", (e) => {
             popup.style.display = "block";
-            // console.log(popup.style.display);
+            console.log(popup.style.display);
+
+            ////deme
+            const id = parseInt(e.target.parentNode.parentNode.children[1].innerText);
+            fetch(`http://localhost:8000/groupe4/api/users/${id}`)
+                .then((rep) => rep.json())
+                .then((rep) => {
+                    nom.value = rep.name;
+                    username.value = rep.username;
+                    email.value = rep.email;
+                    website.value = rep.website;
+                    phone.value = rep.phone;
+                    street.value = rep.address.street;
+                    city.value = rep.address.city;
+                    suite.value = rep.address.suite;
+                    zipcode.value = rep.address.zipcode;
+                    zipcode.value = rep.address.zipcode;
+                    lat.value = parseFloat(rep.address.geo.lat);
+                    lng.value = parseFloat(rep.address.geo.lng);
+                    NAME.value = rep.company.name;
+                    catchPhrase.value = rep.company.catchPhrase;
+                    bs.value = rep.company.bs;
+                    modifieBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        var data = {
+                            name: nom.value,
+                            username: username.value,
+                            email: email.value,
+                            phone: phone.value,
+                            website: website.value,
+                            street: street.value,
+                            suite: suite.value,
+                            city: city.value,
+                            zipcode: zipcode.value,
+                            lat: lat.value,
+                            lng: lng.value,
+                            company_name: NAME.value,
+                            catchphrase: catchPhrase.value,
+                            bs: bs.value,
+                        };
+
+                        fetch(`http://localhost:8000/groupe4/api/users/${id}`, {
+                            method: "PATCH",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(data),
+                        });
+                        console.log(data);
+                        window.location.href = "../templates/affiche_user.html";
+                    });
+                });
+            //
         });
     }
     closeBtn.addEventListener("click", () => {

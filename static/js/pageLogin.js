@@ -29,33 +29,28 @@ function CONNEXION() {
     }
     else {
 
-        for (var use = 0; use < COMPTE.length; use++) {
-            var users = COMPTE[use]
-            
+        for (users of COMPTE) {
 
             if (UTILISATEUR == users.nom && users == users.passe) {
                 window.location.href = "../templates/affiche_user.html";
-                // window.location.href ="http://127.0.0.1:5000/pagePrincipal"
+            }
+
+            else {
+                var VALEUR = parseInt(document.getElementById("nombre").value);
+                if (isNaN(VALEUR)) { valeur = 0 }
+
+                else {
+                    VALEUR++; document.getElementById('nombre').value = VALEUR
+
+                }
+                myError.innerHTML = "Nom d'utilistaeur ou mot de passe incorrect"
+                myError.style.color = 'red'
             }
         }
-        console.log(UTILISATEUR)
-        console.log(MOTDEPASSE)
-            // else {
-            //     var VALEUR = parseInt(document.getElementById("nombre").value);
-            //     if (isNaN(VALEUR)) { valeur = 0 }
-
-            //     else {
-            //         VALEUR++; document.getElementById('nombre').value = VALEUR
-
-            //     }
-            //     myError.innerHTML = "Nom d'utilistaeur ou mot de passe incorrect"
-            //     myError.style.color = 'red'
-            // }
-        
     }
-        // if (VALEUR >= 3) {
-        //     alert('vous avez tenté à plusieurs reprises les mauvaises informations de connexion')
-        // }
+        if (VALEUR >= 3) {
+            alert('vous avez tenté à plusieurs reprises les mauvaises informations de connexion')
+        }
 
 
     
