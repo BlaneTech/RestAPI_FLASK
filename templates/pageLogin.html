@@ -13,15 +13,19 @@
 
 <body>
     <div id="conteneur">
-        <div id="form">
-            <input type="text" id="utilisateur" placeholder="compte utilisateur" size="30">
+        <div id="logo">
+            <img src="../static/toutivoore.jpg" alt="">
+        </div>
+        <form id="form" method="POST" action="/sign_in">
+            <input type="text" id="utilisateur" name="username" placeholder="compte utilisateur" size="30">
 
-            <input type="password" id="motdepasse" placeholder="Votre mot de passe" size="30">
+            <input type="password" id="motdepasse" name="password" placeholder="Votre mot de passe" size="30">
 
             <input type="hidden" id="nombre" value="0">
-            <button onclick="CONNEXION()"> CONNECTER </button>
+            <button type="submit"> CONNECTER </button>
             <p id="erreur"></p>
-        </div>
+        </form>
+
     </div>
 
 

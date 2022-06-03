@@ -11,18 +11,18 @@
     />
     <title>AFFICHE USER</title>
 
-    <style>
+    <!-- <style>
         .gris {
             background-color: #aaa;
         }
-    </style>
+    </style> -->
 </head>
 
 <body>
 
     <div id="container">
         <div id="btns">
-            <a href="add_user.html">
+            <a href="{{ url_for('new_user') }}">
                 <button class="btnP" id="btn1">NEW USER</button>
             </a>
             </form>
@@ -43,7 +43,7 @@
         </table>
 
         <!-- popup update -->
-
+        <div id="containtPopup" class="">
         <div class="cadre">
             <em class="fa-solid fa-circle-xmark"></em>
 
@@ -77,13 +77,12 @@
                     <input type="text" name="bs" id="bs" placeholder="bs" required />
 
                 </fieldset>
-
-
+                
                 <input type="submit" id="submit" value="MODIFIER">
             </form>
 
         </div>
-
+    </div>
     </div>
 
 </body>

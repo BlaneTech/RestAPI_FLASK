@@ -87,6 +87,13 @@ class Comment(db.Model):
     archive = db.Column(db.Integer, default=1)
 
 
+class Utilisateurs(db.Model):
+    id = db.Column(db.Integer(), primary_key = True)
+    username = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    profil = db.Column(db.String(255), nullable=False)
+
+
 if __name__ == "__main__":
     db.drop_all()
     db.create_all()

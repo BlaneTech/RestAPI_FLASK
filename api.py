@@ -12,10 +12,35 @@ api.config["JSON_SORT_KEYS"] = False
 
 URL = "/groupe4/api/"
 
+@api.route('/')
+def login():
+    return render_template('pageLogin.html')
 
-@api.route("/")
-def hello():
+
+@api.route("/display_user")
+def display_user():
     return render_template('affiche_user.html')
+
+
+@api.route('/new_user')
+def new_user():
+    return render_template('add_user.html')
+
+
+@api.route('/sign_in', methods=['POST'])
+def sign_in():
+    utilisateurs = Utilisateurs.query.all()
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        for utiliasateur in utilisateurs:
+            if utiliasateur.username == username and utiliasateur.password == password:
+                
+                return redirect('/display_user')
+            else:
+                return render_template('pageLogin.html')
+        
 
 @api.route('/add_user')
 def add_user_page():
