@@ -2,11 +2,10 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 api = Flask(__name__)
-api.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://groupe4:test123@localhost/projetflask"
+api.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:test123@localhost/projetflask"
 api.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 
 db = SQLAlchemy(api)
-
 
 class Users(db.Model):
     userid = db.Column(db.Integer(), primary_key=True)
@@ -86,6 +85,13 @@ class Comment(db.Model):
     commentbody = db.Column(db.Text(), nullable=False)
     postid = db.Column(db.Integer, db.ForeignKey("posts.postid"))
     archive = db.Column(db.Integer, default=1)
+
+
+class Utilisateurs(db.Model):
+    id = db.Column(db.Integer(), primary_key = True)
+    username = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    profil = db.Column(db.String(255), nullable=False)
 
 
 if __name__ == "__main__":
