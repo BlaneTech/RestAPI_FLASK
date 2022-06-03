@@ -2,11 +2,12 @@ let ligne=""
 const listUser = document.querySelector(".listUsers")
 fetch('http://localhost:8000/groupe4/api/users')
 .then(rep=>rep.json())
-.then(rep=>{rep.forEach(user=> {
+.then(rep=>{ 
+    rep.forEach(user=> {
     ligne+=`
     <tr class="tr">      
         <td class="radio"><input type="radio" name="select" ></td>
-        <td class="td">${user.id}</td>
+        <td>${user.id}</td>
         <td class="td">${user.name}</td>
         <td class="td" >${user.email}</td>
         <td class="td" >${user.phone}</td>
@@ -20,6 +21,7 @@ fetch('http://localhost:8000/groupe4/api/users')
 let c=document.querySelector("tbody")
 c.addEventListener("click",(e)=>{
     let btn=e.target
+    console.log(btn.getAttribute("class"))
     if(btn.type == "radio"){ 
         var radio = document.getElementsByName("select");
         for( var i=0;i<radio.length;i++){
@@ -46,17 +48,25 @@ c.addEventListener("click",(e)=>{
             })
         }
     }else{
-        btn.addEventListener('click',(e)=>{
-            var input = document.createElement('input')
-            input.setAttribute("type","text")
-            input.value=e.target.innerText
-            e.target.innerText=""
-            e.target.append(input)
-            input.addEventListener('blur',()=>{
-                e.target.innerText=input.value
-                input.remove() 
-            })
-        }) 
+        
+    if(btn.getAttribute("class")==="td"){
+            btn.addEventListener('click',(e)=>{
+                var champ=e.target
+                var input = document.createElement('input')
+                input.setAttribute("type","text")
+                if(champ.innerText){
+                    input.value=champ.innerText
+                    champ.innerText=""
+                    champ.append(input)
+                    input.addEventListener('blur',()=>{
+                    champ.innerText=input.value
+                    input.remove() 
+                    })
+                }
+                
+            }) 
+        }
+        
     }
     popupUpdate()
 
