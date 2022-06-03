@@ -34,10 +34,11 @@ def sign_in():
         username = request.form['username']
         password = request.form['password']
         
-        for utiliasateur in utilisateurs:
-            if utiliasateur.username == username and utiliasateur.password == password:
+        for utilisateur in utilisateurs:
+            if utilisateur.username == username and utilisateur.password == password:
+                profil = utilisateur.profil
                 
-                return redirect('/display_user')
+                return render_template('affiche_user.html', profil=profil)
             else:
                 return render_template('pageLogin.html')
         

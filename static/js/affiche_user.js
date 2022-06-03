@@ -90,6 +90,8 @@ fetch("http://localhost:8000/groupe4/api/users")
         );
         localStorage.setItem("id", `${id}`);
         window.location.href = "../templates/user.html";
+        // window.location.href = "{{ url_for('new_user') }}";
+
       });
     });
   });
