@@ -1,10 +1,11 @@
-from flask import Flask, jsonify, redirect, request, render_template
+from flask import Flask, flash, jsonify, redirect, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from database import *
 
 api = Flask(__name__)
 CORS(api)
+api.config['SECRET_KEY'] = 'groupe4'
 api.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:test123@localhost/projetflask"
 api.config['CORS_HEADERS'] = 'Content-Type'
 api.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
@@ -27,9 +28,15 @@ def new_user():
     return render_template('add_user.html')
 
 
+@api.route('/user_page')
+def user_page():
+    return render_template('user.html')
+
+
 @api.route('/sign_in', methods=['POST'])
 def sign_in():
     utilisateurs = Utilisateurs.query.all()
+    temp=0
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -37,10 +44,12 @@ def sign_in():
         for utilisateur in utilisateurs:
             if utilisateur.username == username and utilisateur.password == password:
                 profil = utilisateur.profil
-                
-                return render_template('affiche_user.html', profil=profil)
+                return redirect('display_user')
             else:
-                return render_template('pageLogin.html')
+                temp+=1
+        if temp == 3:
+            flash("Usename or password invalide")
+            return redirect('/')
         
 
 @api.route('/add_user')

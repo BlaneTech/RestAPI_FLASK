@@ -20,10 +20,14 @@
             <input type="text" id="utilisateur" name="username" placeholder="compte utilisateur" size="30">
 
             <input type="password" id="motdepasse" name="password" placeholder="Votre mot de passe" size="30">
-
+            
             <input type="hidden" id="nombre" value="{{ profil }}">
             <button type="submit" id="submit"> CONNECTER </button>
-            <p id="erreur"></p>
+            {% for message in get_flashed_messages() %}
+            
+            <p id="erreur">{{ message }} </p>
+            {% endfor %}
+
         </form>
 
     </div>

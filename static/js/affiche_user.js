@@ -12,9 +12,12 @@ fetch("http://localhost:8000/groupe4/api/users")
         <td class="td" >${user.email}</td>
         <td class="td" >${user.phone}</td>
 
-<td class="actions"><input type="button" class="update" value="update"> <input  type="button" class="delete" value="delete"> <input type="button"  class="voir_plus" value="voir plus"> </td>
-
-        </tr>`;
+<td class="actions">
+<input type="button" class="update" value="update">
+<input  type="button" class="delete" value="delete"> 
+<a href="{{ url_for('user_page') }}"><input type="button"  class="voir_plus" value="voir+"></a> 
+</td>
+ </tr>`;
     });
     listUser.innerHTML = ligne;
     let c = document.querySelector("tbody");
@@ -45,45 +48,41 @@ fetch("http://localhost:8000/groupe4/api/users")
             }
           });
         }
-    }else{
-        
-    if(btn.getAttribute("class")==="td"){
-            btn.addEventListener('click',(e)=>{
-                var champ=e.target
-                var input = document.createElement('input')
-                input.setAttribute("type","text")
-                if(champ.innerText){
-                    input.value=champ.innerText
-                    champ.innerText=""
-                    champ.append(input)
-                    input.addEventListener('blur',()=>{
-                    champ.innerText=input.value
-                    input.remove() 
-                    })
-                }
-                
-            }) 
+      } else {
+        if (btn.getAttribute("class") === "td") {
+          btn.addEventListener("click", (e) => {
+            var champ = e.target;
+            var input = document.createElement("input");
+            input.setAttribute("type", "text");
+            if (champ.innerText) {
+              input.value = champ.innerText;
+              champ.innerText = "";
+              champ.append(input);
+              input.addEventListener("blur", () => {
+                champ.innerText = input.value;
+                input.remove();
+              });
+            }
+          });
         }
-        
-    }
-    // console.log(deleteBtn.length)
-    // ############# Voir plus ######################
-    let voirPlusBtn = document.querySelectorAll(".voir_plus");
-    console.log(voirPlusBtn.length);
-    voirPlusBtn.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        const id = parseInt(
-          e.target.parentNode.parentNode.children[1].innerText
-        );
-        localStorage.setItem("id", `${id}`);
-        window.location.href = "../templates/user.html";
-        // window.location.href = "{{ url_for('new_user') }}";
-
+      }
+      // console.log(deleteBtn.length)
+      // ############# Voir plus ######################
+      let voirPlusBtn = document.querySelectorAll(".voir_plus");
+      // console.log(voirPlusBtn.length);
+      voirPlusBtn.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const id = parseInt(
+            e.target.parentNode.parentNode.children[1].innerText
+          );
+          localStorage.setItem("id", `${id}`);
+          // window.location.href = "../templates/user.html";
+          // window.location.href = "{{ url_for('new_user') }}";
+        });
       });
     });
+    popupUpdate();
   });
-
- });
 // #################UPDATE##################
 
 var id = parseInt(localStorage.getItem("id"));
@@ -165,7 +164,7 @@ function popupUpdate() {
             // popup.style.display = "none";
             // containtPopupStyle.classList.remove("containtPopup");
 
-            window.location.reload()
+            window.location.reload();
           });
         });
       //
