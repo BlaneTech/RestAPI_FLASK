@@ -15,7 +15,7 @@ fetch("http://localhost:8000/groupe4/api/users")
 <td class="actions">
 <input type="button" class="update" value="update">
 <input  type="button" class="delete" value="delete"> 
-<a href="{{ url_for('user_page') }}"><input type="button"  class="voir_plus" value="voir+"></a> 
+<input type="button"  class="voir_plus" value="voir+"> 
 </td>
  </tr>`;
     });
@@ -66,6 +66,7 @@ fetch("http://localhost:8000/groupe4/api/users")
           });
         }
       }
+
       // console.log(deleteBtn.length)
       // ############# Voir plus ######################
       let voirPlusBtn = document.querySelectorAll(".voir_plus");
@@ -76,13 +77,35 @@ fetch("http://localhost:8000/groupe4/api/users")
             e.target.parentNode.parentNode.children[1].innerText
           );
           localStorage.setItem("id", `${id}`);
-          // window.location.href = "../templates/user.html";
-          // window.location.href = "{{ url_for('new_user') }}";
+          window.location.href = "http://127.0.0.1:5501/templates/user.html";
+          // window.location.href = Flask.url_for('new_user');
         });
       });
     });
+
+    // #############DELETE##############
+
+    var table = document.querySelector("tbody");
+    let ligneSupp = document.querySelectorAll("tr");
+    let deleteBtn = document.querySelectorAll(".delete");
+    for (i = 0; i < deleteBtn.length; i++) {
+      deleteBtn[i].addEventListener("click", (e) => {
+        console.log("delete");
+        var deleteId = parseInt(
+          e.target.parentNode.parentNode.children[1].innerText
+        );
+        fetch(`http://localhost:8000/groupe4/api/users/${deleteId}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        window.location.reload()
+      });
+    }
     popupUpdate();
   });
+
 // #################UPDATE##################
 
 var id = parseInt(localStorage.getItem("id"));

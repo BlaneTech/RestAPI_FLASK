@@ -1,9 +1,12 @@
 from flask import Flask, flash, jsonify, redirect, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+# from flask_jsglue import JSGlue
 from database import *
 
 api = Flask(__name__)
+# jsglue = JSGlue(api)
+
 CORS(api)
 api.config['SECRET_KEY'] = 'groupe4'
 api.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:test123@localhost/projetflask"
